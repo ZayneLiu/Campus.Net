@@ -1,0 +1,15 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{9729766A-0B3C-4A72-814A-D66698335B2C}|Default">
+  <MonoDevelop.Ide.ItemProperties.APIServer PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="APIServer Status">
+    <Files>
+      <File FileName="DataAcess/Models/Question.cs" Line="18" Column="23" />
+      <File FileName="APIServer Status" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
