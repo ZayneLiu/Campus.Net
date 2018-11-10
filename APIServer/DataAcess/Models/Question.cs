@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Threading.Tasks.Sources;
 
 namespace DataAcess.Models
 {
@@ -347,7 +345,78 @@ namespace DataAcess.Models
         string content;
         int likes;
         List<Reply> replies;
-        string Author;
+        string author;
 
+        public string ID
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
+        }
+
+        public DateTime Time
+        {
+            get
+            {
+                return time;
+            }
+            set
+            {
+                time = value;
+            }
+        }
+
+        public string Content
+        {
+            get
+            {
+                return content;
+            }
+            set
+            {
+                content = value;
+            }
+        }
+
+        public int Likes
+        {
+            get
+            {
+                return likes;
+            }
+            set
+            {
+                likes = value;
+            }
+        }
+
+        public List<Reply> Replies
+        {
+            get
+            {
+                return replies;
+            }
+            set
+            {
+                replies = value;
+            }
+        }
+
+        public string Author
+        {
+            get
+            {
+                return author;
+            }
+            set
+            {
+                author = value;
+            }
+        }
     }
 }
