@@ -2,7 +2,7 @@
 .vscode
 .vs
 
-campus_net_ui/
+campus_net_ui
 
 APIServer/.vs/APIServer/xs/sqlite3/storage.ide
 APIServer/.vs/APIServer/xs/sqlite3/storage.ide-shm
