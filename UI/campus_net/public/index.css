@@ -2,9 +2,10 @@ html,
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    /* display: flex; */
+    min-height: 100vh;
 }
 
-#app {
+/* #app {
     height: 100%;
-}
+} */

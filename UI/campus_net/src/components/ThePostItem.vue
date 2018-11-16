@@ -2,29 +2,28 @@
   <div class="post_item">
     <div class="upper">
       <div class="upper-left">
-        <div class="up">
+        <div class="up" @click="approve($event)">
           <i class="fa fa-caret-up"></i>
-          <span>0</span>
+          <span>{{approvals}}</span>
         </div>
       </div>
       <div class="upper-right">
         <div class="title">
-          <a v-text="post.title + id" href="#">Title</a>
-          <span class="type">原创</span>
+          <a v-text="post.title" href="#">Title</a>
+          <span class="type">{{type}}</span>
           <!-- <span class="type">翻译</span> -->
           <!-- <span class="type">搬运</span> -->
         </div>
         <!-- 标签 -->
         <!-- <Tags></Tags> -->
-        <Author></Author>
+        <PostInfo :favorites="post.favorites" :author="post.author" :column="post.column"></PostInfo>
         <p>
           <!-- Content <br /> Content -->
-          {{post.contentPeek}}
-
+          {{thumbnailContent}}
         </p>
       </div>
     </div>
-    <hr />
+    <hr>
   </div>
 </template>
 
@@ -63,7 +62,7 @@
       }
     }
     .upper-right {
-      flex: 9;
+      width: 90%;
       display: flex;
       flex-flow: column nowrap;
       justify-content: flex-start;
@@ -96,13 +95,16 @@
         }
       }
       p {
+        width: 100%;
         margin: 5px 0 5px 0;
         font-size: large;
         text-align: start;
         color: gray;
         overflow: hidden;
         word-wrap: break-word;
+        text-overflow: ellipsis;
         height: 50px;
+        line-height: 25px;
       }
     }
   }
@@ -120,35 +122,39 @@
 <script lang="ts">
 import Vue from 'vue';
 import Tags from '@/components/Tags.vue';
-import Author from '@/components/Author.vue';
+import PostInfo from '@/components/PostInfo.vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { Dictionary } from 'vue-router/types/router';
+import PostModel from '@/models/Post.ts';
+import Author from '@/models/Author';
+import Tag from '@/models/Tag';
+import Column from '@/models/Column';
 
 @Component({
   components: {
-    Tags, Author,
-  },
-
-  props: [
-    'post',
-    'id',
-  ]
-  ,
-  data: () => {
-    return {
-      // post: () => {
-      //   // return Prop.arguments.post;
-      // },
-      // Title: "Title",
-    };
-    // Title: this.Title
-  },
-  computed: {
-    // peekContent: () => {
-    //   // return .post.peekContent.slice(0, 39) + '…';
-    // },
+    Tags,
+    PostInfo,
   },
 })
-export default class PostItem extends Vue {
+export default class ThePostItem extends Vue {
+  @Prop()
+  public post!: PostModel;
+  public title: string = this.post.title;
+  public type: string = this.post.type;
+  public author: Author = this.post.author;
+  public content: string = this.post.content;
+  public column: Column = this.post.column;
+  public tags: Tag[] = this.post.tags;
+  public favorites: number = this.post.favorites;
+  public approvals: number = this.post.approvals;
+  public thumbnailContent: string = this.post.content.slice(0, 150) + '...';
+  constructor() {
+    super();
+  }
+
+  public approve(e: Event) {
+    this.approvals += 1;
+  }
 }
 </script>

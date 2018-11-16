@@ -1,0 +1,266 @@
+// import { Dictionary } from 'vue-router/types/router';
+
+/**
+ * 帖子
+ */
+export default class PostModel {
+  /**
+   * 标题
+   */
+  private TITLE!: string;
+  /**
+   * Gets title
+   * @return 标题
+   */
+  public get title(): string {
+    return this.TITLE;
+  }
+  /**
+   * Sets title
+   */
+  public set title(value: string) {
+    this.TITLE = value;
+  }
+  /**
+   * 内容
+   */
+  private CONTENT!: string;
+  /**
+   * Gets content
+   * @returns 文章内容
+   */
+  public get content(): string {
+    return this.CONTENT;
+  }
+  /**
+   * Sets content
+   */
+  public set content(value: string) {
+    this.CONTENT = value;
+  }
+  /**
+   * 作者
+   */
+  private AUTHOR!: {
+    /**
+     * 用户ID
+     */
+    id: string;
+    /**
+     * 个人主页URL
+     */
+    url: string;
+    /**
+     * 昵称
+     */
+    name: string;
+    /**
+     * 头像URL
+     */
+    avatar: string;
+  };
+  public get author(): {
+    /**
+     * 用户ID
+     */
+    id: string;
+    /**
+     * 个人主页URL
+     */
+    url: string;
+    /**
+     * 昵称
+     */
+    name: string;
+    /**
+     * 头像URL
+     */
+    avatar: string;
+  } {
+    return this.AUTHOR;
+  }
+  public set author(value: {
+    /**
+     * 用户ID
+     */
+    id: string;
+    /**
+     * 个人主页URL
+     */
+    url: string;
+    /**
+     * 昵称
+     */
+    name: string;
+    /**
+     * 头像URL
+     */
+    avatar: string;
+  }) {
+    this.AUTHOR = value;
+  }
+  /**
+   * 票数
+   */
+  private APPROVALS!: number;
+  public get approvals(): number {
+    return this.APPROVALS;
+  }
+  public set approvals(value: number) {
+    console.log(this.APPROVALS);
+
+    this.APPROVALS = value;
+  }
+  /**
+   * 收藏数
+   */
+  private FAVORITES!: number;
+  public get favorites(): number {
+    return this.FAVORITES;
+  }
+  public set favorites(value: number) {
+    this.FAVORITES = value;
+  }
+  /**
+   * 专栏
+   */
+  private COLUMN!: {
+    /**
+     * 专栏URL
+     */
+    url: string;
+    /**
+     * 专栏名
+     */
+    name: string;
+  };
+  public get column(): {
+    /**
+     * 专栏URL
+     */
+    url: string;
+    /**
+     * 专栏名
+     */
+    name: string;
+  } {
+    return this.COLUMN;
+  }
+  public set column(value: {
+    /**
+     * 专栏URL
+     */
+    url: string;
+    /**
+     * 专栏名
+     */
+    name: string;
+  }) {
+    this.COLUMN = value;
+  }
+
+  private TYPE!: string;
+  public get type(): string {
+    return this.TYPE;
+  }
+  public set type(value: string) {
+    this.TYPE = value;
+  }
+
+  /**
+   * 标签列表
+   */
+  private TAGS!: Array<{
+    /**
+     * 标签名
+     */
+    name: string;
+    /**
+     * 标签ID
+     */
+    id: string;
+    /**
+     * 标签主页
+     */
+    url: string;
+  }>;
+  public get tags(): Array<{
+    /**
+     * 标签名
+     */
+    name: string;
+    /**
+     * 标签ID
+     */
+    id: string;
+    /**
+     * 标签主页
+     */
+    url: string;
+  }> {
+    return this.TAGS;
+  }
+  public set tags(
+    value: Array<{
+      /**
+       * 标签名
+       */
+      name: string;
+      /**
+       * 标签ID
+       */
+      id: string;
+      /**
+       * 标签主页
+       */
+      url: string;
+    }>,
+  ) {
+    this.TAGS = value;
+  }
+
+  constructor() {
+    // super();
+  }
+
+  /**
+   * Creates an instance of post model.
+   * @param title 标题
+   * @param content 内容
+   * @param author 作者
+   * @param approvals 得票数
+   * @param favorites 收藏数
+   * @param column 专栏
+   * @param tags 标签列表
+   */
+  public createPost(
+    title: string,
+    content: string,
+    author: {
+      id: string;
+      url: string;
+      name: string;
+      avatar: string;
+    },
+    approvals: number,
+    favorites: number,
+    column: {
+      url: string;
+      name: string;
+    },
+    tags: Array<{
+      name: string;
+      id: string;
+      url: string;
+    }>,
+  ): PostModel {
+    this.TITLE = title;
+    this.CONTENT = content;
+    this.AUTHOR = author;
+    this.APPROVALS = approvals;
+    this.FAVORITES = favorites;
+    this.COLUMN = column;
+    this.TAGS = tags;
+    return this;
+  }
+}

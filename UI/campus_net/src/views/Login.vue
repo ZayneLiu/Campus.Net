@@ -1,32 +1,47 @@
 <template>
   <div id="outer_container">
-      <div id="login_form">
-          <div class="text_above">Welcome to<br/><span>campus.net</span></div>
-          <hr/>
-          <div id="form_body_wrapper">
-              <div class="field">
-                  <label for="username">学号 或 Email</label>
-                  <input type="text" name="username" v-model="user.username" id="username" placeholder="Username">
-              </div>
-              <div class="field">
-                  <label for="password">密码</label>
-                  <input type="password" name="password" v-model="user.password" id="password" placeholder="Password">
-              </div>
-              <div class="btn_group">
-                  <button class="btn_primary" @click="forward_post" value="new User('asd','asd')">Submit</button>
-                  <hr/>
-                  <button class="btn_common" @click="account_recovery" value="new User('asd','asd')">Forget</button>
-              </div>
-          </div>
+    <div id="login_form">
+      <div class="text_above">Welcome to
+        <br>
+        <span>campus.net</span>
       </div>
+      <hr>
+      <div id="form_body_wrapper">
+        <div class="field">
+          <label for="username">学号 或 Email</label>
+          <input
+            type="text"
+            name="username"
+            v-model="user.username"
+            id="username"
+            placeholder="Username"
+          >
+        </div>
+        <div class="field">
+          <label for="password">密码</label>
+          <input
+            type="password"
+            name="password"
+            v-model="user.password"
+            id="password"
+            placeholder="Password"
+          >
+        </div>
+        <div class="btn_group">
+          <button class="btn_primary" @click="forward_post" value="new User('asd','asd')">Submit</button>
+          <hr>
+          <button class="btn_common" @click="account_recovery" value="new User('asd','asd')">Forget</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 #outer_container {
-  @import url("../../public/form.css");
-  height: calc(100vh - 50px);
-  min-height: 500px;
+  @import url('../../public/form.css');
+  min-height: 100vh;
+  // height: 100%;
   width: 100%;
   display: flex;
   flex-flow: column;
@@ -49,7 +64,7 @@
     // margin-right: auto;
     // CENTER END
     .text_above {
-      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
         sans-serif;
       margin-bottom: 15px;
       font-size: 25px;

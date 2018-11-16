@@ -16,14 +16,14 @@
 
 
 <script lang="ts">
-import Vue from "vue";
-import Login from "@/components/Login.vue";
-import Component from "vue-class-component";
+import Vue from 'vue';
+import Login from '@/components/Login.vue';
+import Component from 'vue-class-component';
 
 @Component({
   components: {
-    Login
-  }
+    Login,
+  },
 })
 export default class User extends Vue {}
 </script>
