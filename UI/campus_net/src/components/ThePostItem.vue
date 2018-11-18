@@ -11,16 +11,10 @@
         <div class="title">
           <a v-text="post.title" href="#">Title</a>
           <span class="type">{{type}}</span>
-          <!-- <span class="type">翻译</span> -->
-          <!-- <span class="type">搬运</span> -->
         </div>
         <!-- 标签 -->
-        <!-- <Tags></Tags> -->
-        <PostInfo :favorites="post.favorites" :author="post.author" :column="post.column"></PostInfo>
-        <p>
-          <!-- Content <br /> Content -->
-          {{thumbnailContent}}
-        </p>
+        <PostInfo :favorites="favorites" :author="post.author" :column="post.column"></PostInfo>
+        <p v-html="thumbnailContent"></p>
       </div>
     </div>
     <hr>

@@ -1,10 +1,10 @@
 <template>
   <div id="outer_container">
     <div class="nav">
-      <router-link to="/community/posts">专栏</router-link>
-      <router-link to="/community/qas">Q&amp;A</router-link>
-      <router-link to="/community/write">发帖</router-link>
-      <router-link to="/community/ask">提问</router-link>
+      <router-link to="/posts">专栏</router-link>
+      <router-link to="/qas">Q&amp;A</router-link>
+      <router-link to="/write">发帖</router-link>
+      <router-link to="/ask">提问</router-link>
     </div>
     <router-view></router-view>
   </div>
@@ -12,7 +12,6 @@
 
 <style lang="scss" scoped>
 #outer_container {
-  // height: 100%;
   flex: 1;
   .nav {
     display: flex;
@@ -20,16 +19,12 @@
     width: 100%;
     background-color: rgba($color: lightgrey, $alpha: 0.5);
     justify-content: center;
-    // line-height: 100%;
     align-self: center;
     a {
       margin: 0 10px;
       display: block;
-      // height: 30px;
-      // line-height: 100%;
       text-decoration: none;
       text-align: center;
-      // align-content: center;
       &.router-link-active {
         background-color: #42b983;
         color: #fff;
@@ -47,15 +42,15 @@ import Component from 'vue-class-component';
 const innerRouter = new VueRouter({
   routes: [
     {
-      path: '/community/posts',
+      path: '/posts',
       component: () => import('@/views/Community/Posts.vue'),
     },
     {
-      path: '/community/qas',
+      path: '/qas',
       component: () => import('@/views/Community/QAs.vue'),
     },
     {
-      path: '/community/write',
+      path: '/write',
       component: () => import('@/components/Write.vue'),
     },
     // { path: '/community/ask', component: () => import('@/views/Ask.vue') },

@@ -11,7 +11,9 @@
     </div>
     <div class="column-and-tags">
       <select class="field" name="select-column" id="">
+        <!-- <optgroup label=""> -->
         <option v-for="(column, index) in columns" v-bind:key="index" :value="column">{{column}}</option>
+        <!-- </optgroup> -->
       </select>
       <input
         @focus="chooseTags($event)"
@@ -118,7 +120,6 @@
       width: 100%;
       font-size: medium;
     }
-    // height: 100%;
   }
 }
 </style>
