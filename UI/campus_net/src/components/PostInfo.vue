@@ -112,6 +112,7 @@ export default class PostInfo extends Vue {
   public addToFav(e: Event) {
     // alert(e);
     this.favorites++;
+    this.$forceUpdate();
   }
 }
 </script>

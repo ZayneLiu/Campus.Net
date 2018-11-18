@@ -1,7 +1,7 @@
-// import { Dictionary } from 'vue-router/types/router';
 import Author from './Author';
 import Column from './Column';
 import Tag from './Tag';
+
 /**
  * 帖子
  */

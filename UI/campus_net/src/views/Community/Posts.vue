@@ -89,7 +89,7 @@ export default class Posts extends Vue {
           name: 'username',
           avatar: 'avatar_url',
         },
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
+        'Lorem ipsum dolor sit  elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
         0,
         0,
         {
@@ -108,7 +108,7 @@ export default class Posts extends Vue {
           name: 'username',
           avatar: 'avatar_url',
         },
-        'Loremasfd amet, consectetur adipiscing elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
+        'Loremasfd amet, consecluctus. Etiam lectus amet.',
         0,
         0,
         {
@@ -127,7 +127,7 @@ export default class Posts extends Vue {
           name: 'username',
           avatar: 'avatar_url',
         },
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
+        'Lorem dipiscing elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
         0,
         0,
         {
@@ -146,7 +146,7 @@ export default class Posts extends Vue {
           name: 'username',
           avatar: 'avatar_url',
         },
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
+        'Lorem ipsuing elit. Etiam gravida lorem eu urna vehicula luctus. Etiam lectus amet.',
         0,
         0,
         {

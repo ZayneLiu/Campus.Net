@@ -12,7 +12,6 @@
 
 <style lang="scss" scoped>
 #outer_container {
-  // height: 100%;
   flex: 1;
   .nav {
     display: flex;
@@ -20,16 +19,12 @@
     width: 100%;
     background-color: rgba($color: lightgrey, $alpha: 0.5);
     justify-content: center;
-    // line-height: 100%;
     align-self: center;
     a {
       margin: 0 10px;
       display: block;
-      // height: 30px;
-      // line-height: 100%;
       text-decoration: none;
       text-align: center;
-      // align-content: center;
       &.router-link-active {
         background-color: #42b983;
         color: #fff;
