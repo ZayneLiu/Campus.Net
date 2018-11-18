@@ -1,10 +1,10 @@
 <template>
   <div id="outer_container">
     <div class="nav">
-      <router-link to="/community/posts">专栏</router-link>
-      <router-link to="/community/qas">Q&amp;A</router-link>
-      <router-link to="/community/write">发帖</router-link>
-      <router-link to="/community/ask">提问</router-link>
+      <router-link to="/posts">专栏</router-link>
+      <router-link to="/qas">Q&amp;A</router-link>
+      <router-link to="/write">发帖</router-link>
+      <router-link to="/ask">提问</router-link>
     </div>
     <router-view></router-view>
   </div>
@@ -47,15 +47,15 @@ import Component from 'vue-class-component';
 const innerRouter = new VueRouter({
   routes: [
     {
-      path: '/community/posts',
+      path: '/posts',
       component: () => import('@/views/Community/Posts.vue'),
     },
     {
-      path: '/community/qas',
+      path: '/qas',
       component: () => import('@/views/Community/QAs.vue'),
     },
     {
-      path: '/community/write',
+      path: '/write',
       component: () => import('@/components/Write.vue'),
     },
     // { path: '/community/ask', component: () => import('@/views/Ask.vue') },
