@@ -1,14 +1,14 @@
 <template>
   <div id="container">
     <div class="title-field">
-      <div id="title-left" @click="name">
+      <div v-if="post" id="title-left" @click="name">
         <span>原创</span>
         <i class="fa fa-caret-down"/>
       </div>
       <input class="field" type="text" placeholder="标题：那是我夕阳下的奔跑">
     </div>
     <div class="column-and-tags">
-      <select class="field" name="select-column" id="">
+      <select v-if="this.post || this.question" class="field" name="select-column" id="">
         <option v-for="(column, index) in columns" v-bind:key="index" :value="column">{{column}}</option>
       </select>
       <input
@@ -34,6 +34,8 @@
   flex-flow: column nowrap;
   justify-content: flex-start;
   .title-field {
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
     user-select: none;
     cursor: pointer;
     padding: 0;
@@ -50,9 +52,7 @@
       align-self: center;
       padding: 0 15px;
       cursor: pointer;
-      border: 1px solid #c5c5c5;
-      border-right: none;
-      border-radius: 4px 0 0 4px;
+      border-right: 1px solid #c5c5c5;
       font-size: large;
       line-height: 45px;
       span {
@@ -69,8 +69,7 @@
       margin: 0;
       padding: 0;
       display: block;
-      border: 1px solid #c5c5c5;
-      border-radius: 0 4px 4px 0;
+      border: none;
       font-size: large;
       line-height: 45px;
       padding: 0 0 0 15px;
@@ -115,6 +114,17 @@ import editor from '@/components/TheMavonEditor.vue';
   components: { editor },
 })
 export default class Write extends Vue {
+  @Prop({
+    default: false,
+    // required: true,
+  })
+  public post!: boolean;
+  @Prop({
+    default: false,
+    // required: true,
+  })
+  public question!: boolean;
+
   constructor() {
     super();
   }
@@ -123,7 +133,9 @@ export default class Write extends Vue {
   }
 
   private get columns(): string[] {
-    return ['发布专栏（选填）', 'asdf', 'adf'];
+    return this.post == true
+      ? ['发布专栏（选填）', 'asdf', 'adf']
+      : ['提问模版', 'asdf', 'asdf'];
   }
 
   private name() {

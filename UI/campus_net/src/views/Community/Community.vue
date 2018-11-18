@@ -52,8 +52,17 @@ const innerRouter = new VueRouter({
     {
       path: '/write',
       component: () => import('@/components/Write.vue'),
+      props: {
+        post: true,
+      },
     },
-    // { path: '/community/ask', component: () => import('@/views/Ask.vue') },
+    {
+      path: '/ask',
+      component: () => import('@/components/Write.vue'),
+      props: {
+        question: true,
+      },
+    },
   ],
 });
 
