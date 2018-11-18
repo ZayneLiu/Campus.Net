@@ -22,9 +22,16 @@
         placeholder="标签，如：php（用逗号,分号;分隔）"
       >
     </div>
-    <div id="editor" class="field">
-      <textarea name="" id="" cols="30" rows="10"></textarea>
-    </div>
+    <editor></editor>
+    <!-- <div id="panel"> -->
+    <!-- <div id="editor">
+        <pre></pre>
+        <pre></pre>
+        <pre></pre>
+        <pre></pre>
+      </div>
+    <div id="preview"></div>-->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -34,7 +41,11 @@
   border-radius: 4px;
 }
 #container {
+  // @import url('../assets/css/editormd.min.css');
+  @import url('');
   height: 100%;
+  // max-height: 100vh;
+  // overflow: scroll;
   padding: 10px;
   // background-color: #000;
   display: flex;
@@ -109,18 +120,30 @@
       font-size: medium;
     }
   }
-  #editor {
-    margin-top: 10px;
-    display: block;
-    padding: 0;
-    width: 100%;
-    height: 600px;
-    textarea {
-      height: 100%;
-      width: 100%;
-      font-size: medium;
-    }
-  }
+  // #panel {
+  //   margin: 10px 0 0 0;
+  //   padding: 0;
+  //   border-radius: 4px;
+  //   border: 1px #c5c5c5 solid;
+  //   display: flex;
+  //   flex-flow: row nowrap;
+  //   justify-content: space-evenly;
+  //   // background-color: #000;
+  //   #editor {
+  //     flex: 1;
+  //     background-color: #000;
+  //     // display: block;
+  //     margin: 0;
+  //     padding: 0;
+  //     // width: 100%;
+  //     height: 100px;
+  //   }
+  //   #preview {
+  //     flex: 1;
+  //     background-color: grey;
+  //     height: 100px;
+  //   }
+  // }
 }
 </style>
 
@@ -128,8 +151,11 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import editor from '@/components/TheMavonEditor.vue';
 
-@Component({})
+@Component({
+  components: { editor },
+})
 export default class Write extends Vue {
   constructor() {
     super();
@@ -147,8 +173,7 @@ export default class Write extends Vue {
   }
 
   private chooseTags(e: Event) {
-    // console.log( '选择标签' );
-    // return;
+    //
   }
 }
 </script>
