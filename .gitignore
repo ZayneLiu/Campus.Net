@@ -1,2 +1,6 @@
 .DS_Store
-APIServer/.vs/APIServer/xs/
+APIServer/.vs/APIServer/xs
+APIServer/.vs/APIServer/xs/UserPrefs.xml
+APIServer/.vs/APIServer/xs/sqlite3/storage.ide
+APIServer/.vs/APIServer/xs/sqlite3/storage.ide-shm
+APIServer/.vs/APIServer/xs/sqlite3/storage.ide-wal
