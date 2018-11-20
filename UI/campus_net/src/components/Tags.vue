@@ -1,11 +1,26 @@
 <template>
-	<div class="tags">
-		<a href="#" class="tag ">Python</a>
-		<a href="#" class="tag">Database</a>
-		<a href="#" class="tag">Flask</a>
-		<a href="#" class="tag">Web</a>
-	</div>
+  <div class="tags">
+    <a v-for="(tag,index) in tags" :key="index" :href="tag.url" class="tag" :html="tag.name"/>
+    <a href="#" class="tag">Database</a>
+    <a href="#" class="tag">Flask</a>
+    <a href="#" class="tag">Web</a>
+  </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import Tag from '@/models/Tag';
+
+@Component({})
+export default class Tags extends Vue {
+  @Prop({
+    required: true,
+  })
+  public tags!: Tag[];
+}
+</script>
 
 <style lang="scss" scoped>
 .tags {
@@ -35,11 +50,3 @@
   }
 }
 </style>
-
-<script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
-
-@Component({})
-export default class Tags extends Vue {}
-</script>

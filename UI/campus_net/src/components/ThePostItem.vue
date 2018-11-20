@@ -13,13 +13,53 @@
           <span class="type">{{type}}</span>
         </div>
         <!-- 标签 -->
-        <PostInfo :favorites="favorites" :author="post.author" :column="post.column"></PostInfo>
+        <PostInfo :favorites="favorites" :author="post.author" :column="post.column"/>
         <p v-html="thumbnailContent"></p>
       </div>
     </div>
     <hr>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Tags from '@/components/Tags.vue';
+import PostInfo from '@/components/PostInfo.vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { Dictionary } from 'vue-router/types/router';
+import Post from '@/models/Post.ts';
+import Author from '@/models/Author';
+import Tag from '@/models/Tag';
+import Column from '@/models/Column';
+
+@Component({
+  components: {
+    // Tags,
+    PostInfo,
+  },
+})
+export default class ThePostItem extends Vue {
+  @Prop()
+  public post!: Post;
+  public title: string = this.post.title;
+  public type: string = this.post.type;
+  public author: Author = this.post.author;
+  public content: string = this.post.content;
+  public column: Column = this.post.column;
+  public tags: Tag[] = this.post.tags;
+  public favorites: number = this.post.favorites;
+  public approvals: number = this.post.approvals;
+  public thumbnailContent: string = this.post.content.slice(0, 150) + '...';
+  constructor() {
+    super();
+  }
+
+  public approve(e: Event) {
+    this.approvals += 1;
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .post_item {
@@ -112,43 +152,3 @@
   }
 }
 </style>
-
-<script lang="ts">
-import Vue from 'vue';
-import Tags from '@/components/Tags.vue';
-import PostInfo from '@/components/PostInfo.vue';
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import { Dictionary } from 'vue-router/types/router';
-import PostModel from '@/models/Post.ts';
-import Author from '@/models/Author';
-import Tag from '@/models/Tag';
-import Column from '@/models/Column';
-
-@Component({
-  components: {
-    Tags,
-    PostInfo,
-  },
-})
-export default class ThePostItem extends Vue {
-  @Prop()
-  public post!: PostModel;
-  public title: string = this.post.title;
-  public type: string = this.post.type;
-  public author: Author = this.post.author;
-  public content: string = this.post.content;
-  public column: Column = this.post.column;
-  public tags: Tag[] = this.post.tags;
-  public favorites: number = this.post.favorites;
-  public approvals: number = this.post.approvals;
-  public thumbnailContent: string = this.post.content.slice(0, 150) + '...';
-  constructor() {
-    super();
-  }
-
-  public approve(e: Event) {
-    this.approvals += 1;
-  }
-}
-</script>

@@ -18,9 +18,53 @@
         placeholder="标签，如：php（用逗号,分号;分隔）"
       >
     </div>
-    <editor></editor>
+    <editor/>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import editor from '@/components/TheMavonEditor.vue';
+
+@Component({
+  components: { editor },
+})
+export default class Write extends Vue {
+  @Prop({
+    default: false,
+    // required: true,
+  })
+  public post!: boolean;
+  @Prop({
+    default: false,
+    // required: true,
+  })
+  public question!: boolean;
+
+  constructor() {
+    super();
+  }
+  private get types(): string[] {
+    return ['原创', '转载', '翻译'];
+  }
+
+  private get columns(): string[] {
+    return this.post === true
+      ? ['发布专栏（选填）', 'asdf', 'adf']
+      : ['提问模版', 'asdf', 'asdf'];
+  }
+
+  private name() {
+    alert('下拉列表，原创、翻译、转载');
+  }
+
+  private chooseTags(e: Event) {
+    //
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .field {
@@ -103,47 +147,3 @@
   }
 }
 </style>
-
-<script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import editor from '@/components/TheMavonEditor.vue';
-
-@Component({
-  components: { editor },
-})
-export default class Write extends Vue {
-  @Prop({
-    default: false,
-    // required: true,
-  })
-  public post!: boolean;
-  @Prop({
-    default: false,
-    // required: true,
-  })
-  public question!: boolean;
-
-  constructor() {
-    super();
-  }
-  private get types(): string[] {
-    return ['原创', '转载', '翻译'];
-  }
-
-  private get columns(): string[] {
-    return this.post == true
-      ? ['发布专栏（选填）', 'asdf', 'adf']
-      : ['提问模版', 'asdf', 'asdf'];
-  }
-
-  private name() {
-    alert('下拉列表，原创、翻译、转载');
-  }
-
-  private chooseTags(e: Event) {
-    //
-  }
-}
-</script>
