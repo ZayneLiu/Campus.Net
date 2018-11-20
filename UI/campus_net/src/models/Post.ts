@@ -5,7 +5,7 @@ import Tag from './Tag';
 /**
  * 帖子
  */
-export default class PostModel {
+export default class Post {
   public title!: string;
   public type!: string;
   public author!: Author;
@@ -14,7 +14,6 @@ export default class PostModel {
   public favorites!: number;
   public column!: Column;
   public tags!: Tag[];
-
   constructor() {
     // super();
   }
@@ -46,12 +45,8 @@ export default class PostModel {
       name: string;
       url: string;
     },
-    tags: Array<{
-      id: string;
-      name: string;
-      url: string;
-    }>,
-  ): PostModel {
+    tags: Tag[],
+  ): Post {
     this.title = title;
     this.content = content;
     this.author = author;
