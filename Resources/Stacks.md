@@ -3,6 +3,7 @@
 	- [Iconfont](http://www.iconfont.cn/)
 
 - [Vue](https://vuejs.org)
+	- [Vue Form Validation](https://monterail.github.io/vuelidate/)
 	- [Vue Official Document](https://vuejs.org/v2/guide/)
 	- [Vue + TypeScript 爬坑之路](https://www.cnblogs.com/wisewrong/p/8570309.html)
 	- [Vue 相关组件集合](https://github.com/opendigg/awesome-github-vue)
