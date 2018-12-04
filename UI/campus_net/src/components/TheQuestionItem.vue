@@ -31,17 +31,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Tags from '@/components/Tags.vue';
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import Questions from '@/views/Community/Questions.vue';
-import Question from '@/models/Question';
+import Vue from "vue";
+import Tags from "@/components/Tags.vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+import Questions from "@/views/Community/Questions.vue";
+import Question from "@/models/Question";
 
 @Component({
   components: {
-    Tags,
-  },
+    Tags
+  }
 })
 export default class TheQuestionItem extends Vue {
   @Prop({})
