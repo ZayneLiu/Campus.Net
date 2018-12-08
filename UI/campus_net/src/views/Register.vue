@@ -63,50 +63,50 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import { numeric } from "vuelidate/lib/validators";
-import axios from "axios";
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { numeric } from 'vuelidate/lib/validators';
+import axios from 'axios';
 
 @Component({
   validations: {
     user: {
       scid: {
-        numeric
-      }
-    }
-  }
+        numeric,
+      },
+    },
+  },
 })
 export default class Register extends Vue {
   private pwdAgain = null;
   private formError = {
     scidInvalid: {
       flag: false,
-      description: { en_US: "SCID Invalid", zh_CN: "学号不存在或已绑定账号" }
+      description: { en_US: 'SCID Invalid', zh_CN: '学号不存在或已绑定账号' },
     },
     passwordMismatch: {
       flag: false,
-      description: { en_US: "Passwords Mismatch", zh_CN: "两次输入密码不一致" }
+      description: { en_US: 'Passwords Mismatch', zh_CN: '两次输入密码不一致' },
     },
     usernameInvalid: {
       flag: false,
-      description: { en_US: "Username Invalid", zh_CN: "用户名非法" }
-    }
+      description: { en_US: 'Username Invalid', zh_CN: '用户名非法' },
+    },
   };
   private user = {
     scid: null,
     username: null,
-    password: null
+    password: null,
   };
   // 注册
   private register() {
     axios({
-      method: "post",
-      url: "https://localhost:5001/api/users/register",
-      responseType: "application/text",
-      data: this.user
-    }).then(response => {
+      method: 'post',
+      url: 'https://localhost:5001/api/users/register',
+      responseType: 'application/text',
+      data: this.user,
+    }).then((response) => {
       console.log(response.data);
     });
   }
@@ -131,7 +131,7 @@ export default class Register extends Vue {
         // Toggle pwdMismatch flag
         this.formError.passwordMismatch.flag = true;
         // Toggle source element's border color
-        e.srcElement.style.borderColor = "var(--color-danger)";
+        e.srcElement.style.borderColor = 'var(--color-danger)';
       } else {
         // Toggle pwdMismatch flag
         this.formError.passwordMismatch.flag = false;
