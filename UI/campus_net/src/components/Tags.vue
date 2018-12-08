@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import Tag from "@/models/Tag";
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import Tag from '@/models/Tag';
 
 @Component({})
 export default class Tags extends Vue {
   @Prop({
-    required: true
+    required: true,
   })
   public tags!: Tag[];
 }
