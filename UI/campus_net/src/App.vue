@@ -5,6 +5,7 @@
       <router-link to="/community">Community</router-link>
       <router-link to="/login">Login</router-link>
       <router-link to="/register">Register</router-link>
+      <router-link to="/user">User</router-link>
     </div>
     <router-view/>
   </div>
@@ -15,7 +16,7 @@
   --color-danger: #f36061;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

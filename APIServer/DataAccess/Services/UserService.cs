@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
-//using System.Linq;
+using System;
 using DataAccess.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
@@ -19,14 +19,12 @@ namespace DataAccess.Services
 			_users = db.GetCollection<User>("users");
 		}
 		
-		#region Create
 		// 创建新的用户 并返回已创建成功的 User 对象
 		public User Create(User userIn)
 		{
 			_users.InsertOne(userIn);
 			return userIn;
 		}
-		#endregion
 
 		#region Read
 		// 获取所有用户
@@ -85,22 +83,16 @@ namespace DataAccess.Services
 		}
 		#endregion
 
-		#region Update
-		public bool Update(ObjectId id, User editedUser)
+		public User Update(ObjectId id, User editedUser)
 		{
-//			var user = GetUserById(id);
-			var result = _users.ReplaceOne(user => user.Id == id, editedUser).IsAcknowledged;
-			return result;
+			return _users.ReplaceOne(user => user.Id == id, editedUser).IsAcknowledged? editedUser: null;
 		}
 
-		#endregion
-
-		#region Delete
-		public bool Delete(ObjectId id)
+		public long Delete(ObjectId id)
 		{
-			var result =  _users.DeleteOne(user => user.Id == id).IsAcknowledged;
-			return result;
+			var deleteResult =  _users.DeleteOne(user => user.Id == id);
+			Console.WriteLine($"{deleteResult.DeletedCount} question modified");
+			return deleteResult.DeletedCount;
 		}
-		#endregion
 	}
 }

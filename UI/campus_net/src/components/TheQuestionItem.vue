@@ -17,7 +17,7 @@
     <div class="content">
       <div class="content-upper">
         <span>
-          <a href="#">author</a>- 最新动态
+          <a href="#">author</a> - 最新动态
         </span>
       </div>
       <div class="content-lower">
@@ -31,17 +31,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Tags from '@/components/Tags.vue';
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import Questions from '@/views/Community/Questions.vue';
-import Question from '@/models/Question';
+import Vue from "vue";
+import Tags from "@/components/Tags.vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+import Questions from "@/views/Community/Questions.vue";
+import Question from "@/models/Question";
 
 @Component({
   components: {
-    Tags,
-  },
+    Tags
+  }
 })
 export default class TheQuestionItem extends Vue {
   @Prop({})
@@ -77,6 +77,9 @@ export default class TheQuestionItem extends Vue {
       display: inline-flex;
       flex-flow: row nowrap;
       align-items: flex-start;
+      span {
+        font-size: small;
+      }
     }
     .content-lower {
       display: flex;

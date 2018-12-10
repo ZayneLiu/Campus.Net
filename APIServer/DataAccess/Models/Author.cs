@@ -1,4 +1,6 @@
-﻿namespace DataAccess.Models
+﻿using MongoDB.Bson;
+
+namespace DataAccess.Models
 {
 	public class Author
 	{
@@ -6,21 +8,8 @@
 		{
 		}
 
-		public Author(string id)
-		{
-			Id = id;
-		}
-
-		public string Id { get; }
-
-		public string Avatar
-		{
-			get => "avatar_url";
-			set { }
-		}
-
-		public string Field;
-
-		public string Url;
+		public Author(ObjectId id) => _id = id;
+		private ObjectId _id;
+		public string Avatar;
 	}
 }

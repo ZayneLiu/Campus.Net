@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DataAccess.Services;
+using NJsonSchema;
+using NSwag.AspNetCore;
 
 namespace APIServer
 {
@@ -18,8 +21,11 @@ namespace APIServer
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddScoped<UserService>();
 			services.AddCors();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+//			services.AddSwagger();
+			services.AddSwaggerDocument();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,8 +38,11 @@ namespace APIServer
 			// Shows UseCors with CorsPolicyBuilder.
 			app.UseCors(builder =>
 				builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-			app.UseHttpsRedirection();
+//			app.UseHttpsRedirection();
 			app.UseMvc();
+//			app.UseStaticFiles();
+			app.UseSwagger();
+			app.UseSwaggerUi3();
 		}
 	}
 }

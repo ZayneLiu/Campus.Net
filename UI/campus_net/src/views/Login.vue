@@ -50,28 +50,28 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
-import { Prop, Component } from 'vue-property-decorator';
-import store from '@/store';
-import axios from 'axios';
-import { helpers, email, numeric } from 'vuelidate/lib/validators';
-import Vuelidate from 'vuelidate';
+import Vue from "vue";
+import { Prop, Component } from "vue-property-decorator";
+import store from "@/store";
+import axios from "axios";
+import { helpers, email, numeric } from "vuelidate/lib/validators";
+import Vuelidate from "vuelidate";
 
 @Component({
   validations: {
     form: {
       login: {
         email,
-        numeric,
-      },
-    },
-  },
+        numeric
+      }
+    }
+  }
 })
 export default class Login extends Vue {
   public loginNotValid: Boolean = false;
   private form = {
-    login: '',
-    password: '',
+    login: "",
+    password: ""
   };
   private formEmpty: boolean = false;
 
@@ -81,13 +81,13 @@ export default class Login extends Vue {
   private login() {
     // 初始化登陆结果
     let result = {
-      result: 'ERROR',
-      userId: '',
+      result: "ERROR",
+      userId: ""
     };
     // 判断输入是否为空
-    this.formEmpty = this.form.login === '' || this.form.password === '';
+    this.formEmpty = this.form.login === "" || this.form.password === "";
     if (this.formEmpty) {
-      alert('Empty form, please fill the login form.');
+      alert("Empty form, please fill the login form.");
       return;
     }
     // login 验证对象
@@ -97,42 +97,39 @@ export default class Login extends Vue {
       // 判断 Login 信息是否合法
       this.loginNotValid = !(login_v.email || login_v.numeric);
       if (this.loginNotValid) {
-        console.log('Login Not Valid');
+        console.log("Login Not Valid");
         return;
       }
       // 重构 form Json
       const form = login_v.email
         ? {
             email: this.form.login,
-            password: this.form.password,
+            password: this.form.password
           }
         : {
             scid: this.form.login,
-            password: this.form.password,
+            password: this.form.password
           };
 
       // 转发POST请求到API服务器
       axios({
-        method: 'post',
-        url: 'https://localhost:5001/api/users/login',
-        responseType: 'application/text',
-        data: form,
-      }).then((response) => {
+        method: "post",
+        url: "https://localhost:5001/api/users/login",
+        responseType: "application/text",
+        data: form
+      }).then(response => {
         // 登陆成功，从服务器返回 登陆结果 和 UserID
-        result = {
-          result: response.data.result,
-          userId: response.data.user,
-        };
-        console.log(result);
+
+        console.log(response.data);
         // console.log(result.userId);
-        if (result.result == 'LOGIN SUCCEEDED') {
+        if (result.result == "LOGIN SUCCEEDED") {
           // 登陆成功 用 vuex 向 session 中存储 userId
           this.$store.commit(
-            'login',
-            result.userId === null ? null : result.userId,
+            "login",
+            result.userId === null ? null : result.userId
           );
           // 从session 中获取 当前用户 userId
-          console.log(sessionStorage.getItem('currentUserId'));
+          console.log(sessionStorage.getItem("currentUserId"));
         }
       });
     }

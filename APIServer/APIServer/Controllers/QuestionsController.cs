@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataAccess.Models;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,33 +16,32 @@ namespace APIServer.Controllers
 		private readonly QuestionService _questionService;
 		public QuestionsController(QuestionService questionService) => _questionService = questionService;
 
-		// GET api/questions
+		// GET: api/questions
 		[HttpGet]
 		[Produces("application/json")]
-		public ActionResult<List<Question>> Method()
+		public ActionResult<List<Question>> GetAllQuestions()
 		{
-			return new List<Question>();
+			return  _questionService.GetAllQuestions();
 		}
 
-//		// GET api/questions/{id}
-//		[HttpGet("{id}")]
-//		[Produces("application/json")]
-//		public ActionResult<Question> GetQuestionById(string id)
-//		{
-//			return new Question
-//			{
-//				Id = id
-//			};
-//		}
-		
+		// GET: api/questions/{string: id}
+		[HttpGet("{id}")]
+		[Produces("application/json")]
+		public ActionResult<Question> GetQuestionById(string id)
+		{
+			return _questionService.GetQuestionById(new ObjectId(id));
+		}
+		// POST: api/questions
 		[HttpPost]
 		[Produces("application/json")]
-		public ActionResult<Question> CreateQuestion()
+		public ActionResult<Question> CreateQuestion([FromBody]JObject jObject)
 		{
-			// create question
-			return  new Question();
+			var question = jObject.ToObject<Question>();
+			var questionCreated = _questionService.Create(question);
+			return  questionCreated;
 		}
 		
+		// PUT: api/questions/{string: id}
 		[HttpPut("{id}")]
 		[Produces("application/json")]
 		public ActionResult<Question> UpdateQuestion(string id, [FromBody]JObject question)
@@ -51,6 +51,13 @@ namespace APIServer.Controllers
 			return questionOut;
 		}
 		
-		
+		// DELETE: api/questions/{string: id}
+		[HttpDelete("{id}")]
+		[Produces("application/json")]
+		public ActionResult DeleteQuestion(string id)
+		{
+			var deleteResult = _questionService.Delete(new ObjectId(id));
+			return NoContent();
+		}
 	}
 }

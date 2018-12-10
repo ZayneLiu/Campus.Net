@@ -22,22 +22,14 @@ namespace APIServer.Controllers
 	{
 		private readonly UserService _userService;
 
-		public UsersController(UserService userService)
-		{
-			_userService = userService;
-		}
+		public UsersController(UserService userService) => _userService = userService;
 
 		#region Login & Register
 
-		// POST api/users/login
-		/// <summary>
-		/// 登陆
-		/// </summary>
-		/// <param name="userToLogin">包含登陆信息的 JSON 对象</param>
-		/// <returns>登陆成功后的用户信息</returns>
-		[HttpPost("/api/Users/Login")]
+		// 登陆
+		// POST: api/users/login
+		[HttpPost("login")]
 		[Produces("application/json")]
-//		[ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
 		public ActionResult<User> Login([FromBody] JObject userToLogin)
 		{
 			var userIn = JsonConvert.DeserializeObject<User>(userToLogin.ToString());
@@ -46,31 +38,18 @@ namespace APIServer.Controllers
 				: _userService.GetUserByEmail(userIn.Email);
 			// return userResult == null ? (ActionResult<User>)NotFound():userResult; 
 			return userResult ?? (ActionResult<User>) NotFound();
-
-			//			var loginResult = userIn.Password == userResult.Password;
-			//			var postResult = new JObject
-			//			{
-			//				{ "success", loginResult },
-			//				{ "userId", userResult.Id.ToString() }
-			//			};
-			//			return postResult;
 		}
 
-		/// <summary>
-		/// 注册
-		/// </summary>
-		/// <param name="userToRegister">包含注册信息的 JSON 对象</param>
-		/// <returns>注册成功后的用户信息</returns>
-		[HttpPost("/api/Users/Register")]
+		// 注册
+		// POST: api/users/register
+		[HttpPost("register")]
 		[Produces("application/json")]
 		public ActionResult<User> Register([FromBody] JObject userToRegister)
 		{
 			// 判断该学号是否已注册，如果未注册，则注册用户，并返回创建结果；已注册返回 false
 			var userIn = JsonConvert.DeserializeObject<User>(userToRegister.ToString());
-//			var resultUser = new User();
 			// 调用注册方法 并返回注册结果
-			if (_userService.GetUserByScid(userIn.SCID) == null)
-				return NoContent();
+			if (_userService.GetUserByScid(userIn.SCID) == null) return NoContent();
 			// 调用注册方法 并返回注册结果
 			var userCreated = _userService.Create(userIn);
 			return userCreated;
@@ -78,26 +57,24 @@ namespace APIServer.Controllers
 
 		#endregion
 
+		// 获取所有用户
 		// GET: api/users/
-		/* 	获取所有用户
-		**/
-		[HttpGet]
+		[HttpGet("all")]
 		[Produces("application/json")]
 		public ActionResult<List<User>> GetAllUsers()
 		{
 			return _userService.GetAllUsers();
 		}
 
-		// POST api/users/
 		/* 	根据提供内容 获取对应用户
 		 * 	{ "scid": "201719192308" }
 		 * 	{ "username": "zayne" }
 		 * 	{ "email": "llz981011@hotmail.com" }
-		 * 	{ "id": "5bfa7b9f9082b5481ab119cd" }
 		**/
-		[HttpPost]
+		// GET: api/users/
+		[HttpGet]
 		[Produces("application/json")]
-		public ActionResult<User> Get([FromBody] JObject keyValuePair)
+		public ActionResult<User> GetUserByInfo([FromBody] JObject keyValuePair)
 		{
 			Console.WriteLine(keyValuePair);
 			var list = new List<string> {"scid", "username", "email", "id"};
@@ -105,38 +82,43 @@ namespace APIServer.Controllers
 			var a = info.Keys.ToList().Select(key => list.Contains(key) ? key : null).First();
 			switch (a)
 			{
-				case "scid":
-					return _userService.GetUserByScid(info[a]);
-				case "username":
-					throw new NotImplementedException();
-				case "email":
-					return _userService.GetUserByEmail(info[a]);
-				case "id":
-					return _userService.GetUserById(new ObjectId(info[a]));
+				case "scid": return _userService.GetUserByScid(info[a]);
+				case "username": throw new NotImplementedException();
+				case "email": return _userService.GetUserByEmail(info[a]);
 			}
 
 			return null;
-			//return _userService.GetUserBySCID(post);
 		}
 
+		// 获得对应 Id 的用户
+		// GET: api/users/{string: id}
+		[HttpGet("{id}")]
+		[Produces("application/json")]
+		public ActionResult<User> GetUserById(string id)
+		{
+			var userOut = _userService.GetUserById(new ObjectId(id));
+			return userOut;
+		}
 
-		// PUT api/values/5
+		// 更新对应 Id 的用户
+		// PUT: api/values/{string: id}
 		[HttpPut("{id}")]
 		[Produces("application/json")]
-		public ActionResult Put(string id, [FromBody] JObject jUser)
+		public ActionResult<User> UpdateUserById(string id, [FromBody] JObject jUser)
 		{
 			var userIn = jUser.ToObject<User>();
-			var result = _userService.Update(new ObjectId(id), userIn);
-			return result ? NoContent() : (ActionResult) NotFound();
+			var userOut = _userService.Update(new ObjectId(id), userIn);
+			return userOut;
 		}
 
-		// DELETE api/values/5
+		// 删除对应 Id 的用户
+		// DELETE: api/values/{string: id}
 		[HttpDelete("{id}")]
 		[Produces("application/json")]
-		public ActionResult Delete(string id)
+		public ActionResult DeleteUserById(string id)
 		{
-			var result = _userService.Delete(new ObjectId(id));
-			return result ? NoContent() : (ActionResult) NotFound();
+			var deleteResult = _userService.Delete(new ObjectId(id));
+			return NoContent();
 		}
 	}
 }

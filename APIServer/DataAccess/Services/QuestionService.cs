@@ -29,7 +29,7 @@ namespace DataAccess.Services
 
 		#region Read
 
-		public List<Question> GetAll()
+		public List<Question> GetAllQuestions()
 		{
 			var questions = _questions.Find(q => true).ToList();
 			return questions;
