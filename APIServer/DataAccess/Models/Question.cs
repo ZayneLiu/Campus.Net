@@ -26,31 +26,4 @@ namespace DataAccess.Models
 		[BsonElement]
 		public int Votes;
 	}
-
-	public class Answer
-	{
-		public int Approvals;
-		public string Author;
-		public string Content;
-		public string Id;
-		public List<Reply> Replies;
-		public DateTime Time;
-	}
-
-	public class Tag
-	{
-		public string Description;
-		public string Id;
-		public string Name;
-	}
-
-	public class Reply
-	{
-		public string Author;
-		public string Content;
-		public string Id;
-		public int Likes;
-		public List<Reply> Replies;
-		public DateTime Time;
-	}
 }
