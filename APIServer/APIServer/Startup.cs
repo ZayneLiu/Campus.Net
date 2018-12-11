@@ -22,6 +22,8 @@ namespace APIServer
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddScoped<UserService>();
+			services.AddScoped<QuestionService>();
+			services.AddScoped<ArticleService>();
 			services.AddCors();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 //			services.AddSwagger();
