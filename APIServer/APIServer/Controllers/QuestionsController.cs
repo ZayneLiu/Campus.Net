@@ -34,9 +34,9 @@ namespace APIServer.Controllers
 		// POST: api/questions
 		[HttpPost]
 		[Produces("application/json")]
-		public ActionResult<Question> CreateQuestion([FromBody]JObject jObject)
+		public ActionResult<Question> CreateQuestion([FromBody]JObject jQuestion)
 		{
-			var question = jObject.ToObject<Question>();
+			var question = jQuestion.ToObject<Question>();
 			var questionCreated = _questionService.Create(question);
 			return  questionCreated;
 		}
@@ -44,11 +44,11 @@ namespace APIServer.Controllers
 		// PUT: api/questions/{string: id}
 		[HttpPut("{id}")]
 		[Produces("application/json")]
-		public ActionResult<Question> UpdateQuestion(string id, [FromBody]JObject question)
+		public ActionResult<Question> UpdateQuestion(string id, [FromBody]JObject jQuestion)
 		{
-			var questionIn = question.ToObject<Question>();
-			var questionOut = _questionService.Update(new ObjectId(id), questionIn);
-			return questionOut;
+			var questionIn = jQuestion.ToObject<Question>();
+			var questionEdited = _questionService.Update(new ObjectId(id), questionIn);
+			return questionEdited;
 		}
 		
 		// DELETE: api/questions/{string: id}
