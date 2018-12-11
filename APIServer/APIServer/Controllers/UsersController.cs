@@ -86,7 +86,6 @@ namespace APIServer.Controllers
 				case "username": throw new NotImplementedException();
 				case "email": return _userService.GetUserByEmail(info[a]);
 			}
-
 			return null;
 		}
 
