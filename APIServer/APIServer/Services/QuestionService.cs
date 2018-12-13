@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using DataAccess.Models;
+using APIServer.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace DataAccess.Services
+namespace APIServer.Services
 {
 	public class QuestionService
 	{

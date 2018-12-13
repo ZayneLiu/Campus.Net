@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models
+namespace APIServer.Models
 {
-	public class Reply
+	public class Answer
 	{
-		public string Id;
 		public DateTime Time;
 		public string Author;
 		public string Content;
-		public int Likes;
+		public int Approvals;
 		public List<Reply> Replies;
 	}
 }

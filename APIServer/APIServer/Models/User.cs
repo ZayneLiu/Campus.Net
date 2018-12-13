@@ -7,7 +7,7 @@ using MongoDB.Bson;
 
 #endregion
 
-namespace DataAccess.Models
+namespace APIServer.Models
 {
 	/// <summary>
 	///     User.

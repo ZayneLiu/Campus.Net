@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DataAccess.Services;
+using APIServer.Services;
 using NJsonSchema;
 using NSwag.AspNetCore;
 

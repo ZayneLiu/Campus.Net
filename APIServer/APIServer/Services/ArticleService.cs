@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using DataAccess.Models;
+using APIServer.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace DataAccess.Services
+namespace APIServer.Services
 {
 	public class ArticleService
 	{
@@ -41,7 +41,7 @@ namespace DataAccess.Services
 			return article;
 		}
 		#endregion
-		
+
 		#region Update
 
 		public Article Update(ObjectId id, Article articleIn)
@@ -59,6 +59,6 @@ namespace DataAccess.Services
 			Console.WriteLine($"{deleteResult.DeletedCount} question modified");
 			return deleteResult.DeletedCount;
 		}
-		
+
 	}
 }

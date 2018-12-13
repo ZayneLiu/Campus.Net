@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataAccess.Models;
-using DataAccess.Services;
+using APIServer.Models;
+using APIServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;

@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models
+﻿namespace APIServer.Models
 {
 	public class Tag
 	{

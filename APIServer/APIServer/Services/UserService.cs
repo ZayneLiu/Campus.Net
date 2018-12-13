@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System;
-using DataAccess.Models;
+using APIServer.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace DataAccess.Services
+namespace APIServer.Services
 {
 	public class UserService
 	{
@@ -18,7 +18,7 @@ namespace DataAccess.Services
 			var db = client.GetDatabase("campus_net");
 			_users = db.GetCollection<User>("users");
 		}
-		
+
 		// 创建新的用户 并返回已创建成功的 User 对象
 		public User Create(User userIn)
 		{
@@ -85,12 +85,12 @@ namespace DataAccess.Services
 
 		public User Update(ObjectId id, User editedUser)
 		{
-			return _users.ReplaceOne(user => user.Id == id, editedUser).IsAcknowledged? editedUser: null;
+			return _users.ReplaceOne(user => user.Id == id, editedUser).IsAcknowledged ? editedUser : null;
 		}
 
 		public long Delete(ObjectId id)
 		{
-			var deleteResult =  _users.DeleteOne(user => user.Id == id);
+			var deleteResult = _users.DeleteOne(user => user.Id == id);
 			Console.WriteLine($"{deleteResult.DeletedCount} question modified");
 			return deleteResult.DeletedCount;
 		}

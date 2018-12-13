@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace DataAccess.Models
+namespace APIServer.Models
 {
 	public class Author
 	{
