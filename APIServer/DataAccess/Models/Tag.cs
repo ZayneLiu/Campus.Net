@@ -3,7 +3,7 @@
 	public class Tag
 	{
 //		public string Id;
-		public string Description;
 		public string Name;
+		public string Description;
 	}
 }

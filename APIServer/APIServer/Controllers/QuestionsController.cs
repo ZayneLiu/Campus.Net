@@ -5,7 +5,9 @@ using DataAccess.Models;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace APIServer.Controllers
 {
@@ -36,6 +38,7 @@ namespace APIServer.Controllers
 		[Produces("application/json")]
 		public ActionResult<Question> CreateQuestion([FromBody]JObject jQuestion)
 		{
+			
 			var question = jQuestion.ToObject<Question>();
 			var questionCreated = _questionService.Create(question);
 			return  questionCreated;
@@ -54,7 +57,9 @@ namespace APIServer.Controllers
 		// DELETE: api/questions/{string: id}
 		[HttpDelete("{id}")]
 		[Produces("application/json")]
-		public ActionResult DeleteQuestion(string id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public ActionResult DeleteQuestion(string id)
 		{
 			var deleteResult = _questionService.Delete(new ObjectId(id));
 			return NoContent();

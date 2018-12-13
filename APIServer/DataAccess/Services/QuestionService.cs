@@ -46,7 +46,7 @@ namespace DataAccess.Services
 
 		public Question Update(ObjectId id, Question questionIn)
 		{
-			var replaceOneResult = _questions.ReplaceOne(q => q.Id == id, questionIn);
+			var replaceOneResult = _questions.ReplaceOne(q => q.Id== id, questionIn);
 			Console.WriteLine($"{replaceOneResult.ModifiedCount} question modified");
 			return questionIn;
 		}
@@ -55,7 +55,7 @@ namespace DataAccess.Services
 
 		public long Delete(ObjectId id)
 		{
-			var deleteResult = _questions.DeleteOne(q => q.Id == id);
+			var deleteResult = _questions.DeleteOne(q => q.Id== id);
 			Console.WriteLine($"{deleteResult.DeletedCount} question modified");
 			return deleteResult.DeletedCount;
 		}

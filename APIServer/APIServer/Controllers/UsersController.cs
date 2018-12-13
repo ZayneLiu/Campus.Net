@@ -37,7 +37,7 @@ namespace APIServer.Controllers
 				? _userService.GetUserByScid(userIn.SCID)
 				: _userService.GetUserByEmail(userIn.Email);
 			// return userResult == null ? (ActionResult<User>)NotFound():userResult; 
-			return userResult ?? (ActionResult<User>) NotFound();
+			return userResult ?? (ActionResult<User>)NotFound();
 		}
 
 		// 注册
@@ -77,7 +77,7 @@ namespace APIServer.Controllers
 		public ActionResult<User> GetUserByInfo([FromBody] JObject keyValuePair)
 		{
 			Console.WriteLine(keyValuePair);
-			var list = new List<string> {"scid", "username", "email", "id"};
+			var list = new List<string> { "scid", "username", "email", "id" };
 			var info = keyValuePair.ToObject<Dictionary<string, string>>();
 			var a = info.Keys.ToList().Select(key => list.Contains(key) ? key : null).First();
 			switch (a)
@@ -114,6 +114,8 @@ namespace APIServer.Controllers
 		// DELETE: api/values/{string: id}
 		[HttpDelete("{id}")]
 		[Produces("application/json")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesDefaultResponseType]
 		public ActionResult DeleteUserById(string id)
 		{
 			var deleteResult = _userService.Delete(new ObjectId(id));
