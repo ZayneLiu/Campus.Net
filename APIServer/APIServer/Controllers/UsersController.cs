@@ -49,7 +49,7 @@ namespace APIServer.Controllers
 			// 判断该学号是否已注册，如果未注册，则注册用户，并返回创建结果；已注册返回 false
 			var userIn = JsonConvert.DeserializeObject<User>(userToRegister.ToString());
 			// 调用注册方法 并返回注册结果
-			if (_userService.GetUserByScid(userIn.SCID) == null) return NoContent();
+			if (_userService.GetUserByScid(userIn.SCID) != null) return NoContent();
 			// 调用注册方法 并返回注册结果
 			var userCreated = _userService.Create(userIn);
 			return userCreated;
