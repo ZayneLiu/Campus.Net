@@ -42,8 +42,8 @@ import Component from 'vue-class-component';
 const innerRouter = new VueRouter({
   routes: [
     {
-      path: '/posts',
-      component: () => import('@/views/Community/Posts.vue'),
+      path: '/articles',
+      component: () => import('@/views/Community/Articles.vue'),
     },
     {
       path: '/questions',

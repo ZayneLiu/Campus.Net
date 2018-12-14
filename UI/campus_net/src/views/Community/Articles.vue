@@ -3,7 +3,7 @@
     <div id="root">
       <main id="main">
         <ul>
-          <li v-for="(post, index) in posts" v-bind:key="index">
+          <li v-bind:key="index" v-for="(post, index) in posts">
             <ThePostItem :post="post"/>
           </li>
         </ul>
@@ -49,16 +49,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import ThePostItem from '@/components/ThePostItem.vue';
+import TheArticleItem from '@/components/TheArticleItem.vue';
 import { Prop } from 'vue-property-decorator';
 import PostModel from '@/models/Post.ts';
 
 @Component({
   components: {
-    ThePostItem,
+    TheArticleItem,
   },
 })
-export default class Posts extends Vue {
+export default class Articles extends Vue {
   get posts() {
     return [
       new PostModel().createPost(

@@ -10,21 +10,21 @@
         <div class="field">
           <label for="username">学号 或 Email</label>
           <input
-            v-model.trim="form.login"
-            type="text"
-            name="login"
             id="login"
+            name="login"
             placeholder="SCID or Email"
+            type="text"
+            v-model.trim="form.login"
           >
         </div>
         <div class="field">
           <label for="password">密码</label>
           <input
-            v-model.trim="form.password"
-            type="password"
-            name="password"
             id="password"
+            name="password"
             placeholder="Password"
+            type="password"
+            v-model.trim="form.password"
           >
         </div>
         <ul>
@@ -37,8 +37,8 @@
         </ul>
         <div class="btn_group">
           <button
-            :disabled="!($v.form.login.email || $v.form.login.numeric)"
             :class="'btn_primary'"
+            :disabled="!($v.form.login.email || $v.form.login.numeric)"
             @click="login"
           >Submit</button>
           <hr>
@@ -50,99 +50,103 @@
 </template>
 
 <script lang='ts'>
-import Vue from "vue";
-import { Prop, Component } from "vue-property-decorator";
-import store from "@/store";
-import axios from "axios";
-import { helpers, email, numeric } from "vuelidate/lib/validators";
-import Vuelidate from "vuelidate";
+import Vue from 'vue';
+import { Prop, Component } from 'vue-property-decorator';
+import store from '@/store';
+import axios from 'axios';
+import { helpers, email, numeric } from 'vuelidate/lib/validators';
+import Vuelidate from 'vuelidate';
+import { Dictionary } from 'vue-router/types/router';
 
 @Component({
   validations: {
     form: {
       login: {
         email,
-        numeric
-      }
-    }
-  }
+        numeric,
+      },
+    },
+  },
 })
 export default class Login extends Vue {
-  public loginNotValid: Boolean = false;
+  public loginNotValid: boolean = false;
   private form = {
-    login: "",
-    password: ""
+    login: '',
+    password: '',
   };
   private formEmpty: boolean = false;
+  mounted() {
+    console.log('mounted');
+    console.log(sessionStorage.getItem('currentUser'));
+  }
 
   private account_recovery() {
     //   账号找回
   }
   private login() {
-    // 初始化登陆结果
-    let result = {
-      result: "ERROR",
-      userId: ""
-    };
+    // // 初始化登陆结果
+    // const result = {
+    //   result: 'ERROR',
+    //   userId: '',
+    // };
     // 判断输入是否为空
-    this.formEmpty = this.form.login === "" || this.form.password === "";
+    this.formEmpty = this.form.login === '' || this.form.password === '';
     if (this.formEmpty) {
-      alert("Empty form, please fill the login form.");
+      alert('Empty form, please fill the login form.');
       return;
     }
     // login 验证对象
-    const login_v = this.$v.form.login;
+    const loginV = this.$v.form.login;
     // login 验证非空
-    if (login_v) {
+    if (loginV) {
       // 判断 Login 信息是否合法
-      this.loginNotValid = !(login_v.email || login_v.numeric);
+      this.loginNotValid = !(loginV.email || loginV.numeric);
       if (this.loginNotValid) {
-        console.log("Login Not Valid");
+        console.log('Login Not Valid');
         return;
       }
       // 重构 form Json
-      const form = login_v.email
+      const form = loginV.email
         ? {
             email: this.form.login,
-            password: this.form.password
+            password: this.form.password,
           }
         : {
             scid: this.form.login,
-            password: this.form.password
+            password: this.form.password,
           };
 
       // 转发POST请求到API服务器
       axios({
-        method: "post",
-        url: "https://localhost:5001/api/users/login",
-        responseType: "application/text",
-        data: form
-      }).then(response => {
+        method: 'post',
+        url: 'https://localhost:5001/api/users/login',
+        responseType: 'application/json',
+        data: form,
+      }).then((response) => {
         // 登陆成功，从服务器返回 登陆结果 和 UserID
-
-        console.log(response.data);
-        // console.log(result.userId);
-        if (result.result == "LOGIN SUCCEEDED") {
-          // 登陆成功 用 vuex 向 session 中存储 userId
-          this.$store.commit(
-            "login",
-            result.userId === null ? null : result.userId
-          );
+        const result: Dictionary<string> = response.data;
+        // console.log(response.data);
+        if (response.data != null) {
+          sessionStorage.setItem('currentUser', result['id']);
+          console.log(result['id']);
+          this.$router.push('/user/');
+          // 登陆成功 用 vuex 向 session 中存储 user
+          // this.$store.commit('login', result);
           // 从session 中获取 当前用户 userId
-          console.log(sessionStorage.getItem("currentUserId"));
+          // console.log(sessionStorage.getItem('currentUserId'));
+          // this.$store.dispatch('login');
         }
       });
     }
 
     // 从服务器获取用户名后
-    // this.$store.dispatch('login');
   }
 }
 </script>
 
 <style lang="scss" scoped>
 #outer_container {
-  @import url("../../public/form.css");
+  @import url('../../public/form.css');
   min-height: 100vh;
   // height: 100%;
   width: 100%;
@@ -167,7 +171,7 @@ export default class Login extends Vue {
     // margin-right: auto;
     // CENTER END
     .text_above {
-      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
         sans-serif;
       margin-bottom: 15px;
       font-size: 25px;

@@ -6,10 +6,10 @@
         <div id="avatar_social">
           <div id="-avatar">avatar</div>
           <div id="-social">
-            <i class="fa fa-weixin" aria-hidden="true"></i>
-            <i class="fa fa-weibo" aria-hidden="true"></i>
-            <i class="fa fa-github" aria-hidden="true"></i>
-            <i class="fa fa-linkedin" aria-hidden="true"></i>
+            <i aria-hidden="true" class="fa fa-weixin"></i>
+            <i aria-hidden="true" class="fa fa-weibo"></i>
+            <i aria-hidden="true" class="fa fa-github"></i>
+            <i aria-hidden="true" class="fa fa-linkedin"></i>
           </div>
         </div>
         <div id="basic_info">
@@ -17,19 +17,19 @@
             <span>ZayneLiu</span>
             <a href="#">查看完整档案</a>
           </div>
-          <div id="-award" class="-item">
+          <div class="-item" id="-award">
             <span>award</span>
           </div>
-          <div id="-city" class="-item">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
+          <div class="-item" id="-city">
+            <i aria-hidden="true" class="fa fa-map-marker"></i>
             <span>city</span>
           </div>
-          <div id="-email" class="-item">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
+          <div class="-item" id="-email">
+            <i aria-hidden="true" class="fa fa-envelope"></i>
             <span @click="edit($event)">email</span>
           </div>
-          <div id="-major" class="-item">
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          <div class="-item" id="-major">
+            <i aria-hidden="true" class="fa fa-graduation-cap"></i>
             <span>major</span>
           </div>
         </div>
@@ -58,38 +58,113 @@
         <p>
           <label for>Gender</label>
           <span>
-            <input type="radio" name="gender" value="Male">Male
-            <input type="radio" name="gender" value="Female">Female
+            <input
+              :checked="user.gender === 'male'? 'checked': ''"
+              name="gender"
+              type="radio"
+              value="Male"
+            >Male
+            <input
+              :checked="user.gender === 'female'? 'checked': ''"
+              name="gender"
+              type="radio"
+              value="Female"
+            >Female
           </span>
         </p>
         <p>
           <label for>SCID</label>
-          <input type="text">
+          <input :value="user.scid" type="text">
         </p>
         <p>
           <label for>Email</label>
-          <input type="text">
+          <input :value="user.email" type="text">
         </p>
         <p>
           <label for>Tel</label>
-          <input type="tel">
+          <input :value="user.tel" type="tel">
         </p>
         <p>
           <label for>Birthday</label>
-          <input type="date">
+          <input :value="user.birthday" type="date">
         </p>
         <p>
           <label for>Major</label>
-          <input type="text">
+          <input :value="user.major" type="text">
         </p>
         <p>
           <label for>Password</label>
-          <input type="text">
+          <input :value="user.password" type="text">
         </p>
       </div>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import axios from 'axios';
+import { Dictionary } from 'vue-router/types/router';
+
+@Component({
+  components: {},
+})
+export default class User extends Vue {
+  private user = {
+    id: '',
+    scid: '',
+    email: '',
+    tel: '',
+    password: '',
+    gender: '',
+    birthday: new Date(),
+    major: '',
+    biography: '',
+  };
+  mounted() {
+    const userId = sessionStorage.getItem('currentUser');
+    axios({
+      method: 'get',
+      url: 'https://localhost:5001/api/users/' + userId,
+      responseType: 'application/json',
+    }).then((response) => {
+      // 登陆成功，从服务器返回 登陆结果 和 UserID
+      const result = response.data;
+      console.log(response.data);
+      console.log(result);
+      if (response.data != null) {
+        // this.user.id = result['id'];
+        this.user = {
+          id: result['id'],
+          scid: result['scid'],
+          email: result['email'],
+          tel: result['tel'],
+          password: result['password'],
+          gender: result['gender'],
+          birthday: result['birthday'],
+          major: result['major'],
+          biography: result['biography'],
+        };
+        console.log(this.user);
+
+        // console.log(result['id']);
+        // this.$router.push('/user/');
+        // 登陆成功 用 vuex 向 session 中存储 user
+        // this.$store.commit('login', result);
+        // 从session 中获取 当前用户 userId
+        // console.log(sessionStorage.getItem('currentUserId'));
+        // this.$store.dispatch('login');
+      }
+    });
+  }
+  public edit(e: Event) {
+    // alert("adf");
+    console.log(e.srcElement);
+  }
+}
+</script>
+
 
 <style lang="scss" scoped>
 .flex.row {
@@ -227,17 +302,3 @@
 }
 </style>
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-
-@Component({
-  components: {}
-})
-export default class User extends Vue {
-  edit(e: Event) {
-    // alert("adf");
-    console.log(e.srcElement);
-  }
-}
-</script>

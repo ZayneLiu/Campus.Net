@@ -2,18 +2,18 @@
   <div class="post_item">
     <div class="upper">
       <div class="upper-left">
-        <div class="up" @click="approve($event)">
+        <div @click="approve($event)" class="up">
           <i class="fa fa-caret-up"></i>
           <span>{{approvals}}</span>
         </div>
       </div>
       <div class="upper-right">
         <div class="title">
-          <a v-text="post.title" href="#">Title</a>
+          <a href="#" v-text="post.title">Title</a>
           <span class="type">{{type}}</span>
         </div>
         <!-- 标签 -->
-        <PostInfo :favorites="favorites" :author="post.author" :column="post.column"/>
+        <PostInfo :author="post.author" :column="post.column" :favorites="favorites"/>
         <p v-html="thumbnailContent"></p>
       </div>
     </div>
@@ -39,7 +39,7 @@ import Column from '@/models/Column';
     PostInfo,
   },
 })
-export default class ThePostItem extends Vue {
+export default class TheArticleItem extends Vue {
   @Prop()
   public post!: Post;
   public title: string = this.post.title;

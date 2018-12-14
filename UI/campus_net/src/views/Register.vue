@@ -7,46 +7,46 @@
         <div class="field">
           <label for="name">学号</label>
           <input
-            v-model="user.scid"
             @blur="scidValidator($event)"
             name="scid"
-            type="text"
             placeholder="SCID"
+            type="text"
+            v-model="user.scid"
           >
         </div>
         <div class="field">
           <label for="name">用户名</label>
           <input
-            v-model="user.username"
             @blur="usernameValidator($event)"
             name="username"
-            type="text"
             placeholder="Username"
+            type="text"
+            v-model="user.username"
           >
           <!-- 昵称字母开头，不能以数字开头，可以中文 -->
         </div>
         <div class="field">
           <label for="password">密码</label>
           <input
-            v-model="user.password"
             @blur="pwdValidator($event)"
             name="password"
-            type="password"
             placeholder="Password"
+            type="password"
+            v-model="user.password"
           >
         </div>
         <div class="field">
           <label for="password_again">再次输入密码</label>
           <input
-            v-model="pwdAgain"
             @blur="pwdValidator"
             name="password_again"
-            type="password"
             placeholder="Password Again"
+            type="password"
+            v-model="pwdAgain"
           >
         </div>
         <ul id="error_list">
-          <li v-for="(error, name, index) in formError" :key="index" v-if="error.flag">
+          <li :key="index" v-for="(error, name, index) in formError" v-if="error.flag">
             {{error.description.zh_CN}}
             <br>
             {{error.description.en_US}}
@@ -54,7 +54,7 @@
         </ul>
         <hr>
         <div class="btn_group">
-          <button class="btn_primary" @click="register">Register</button>
+          <button @click="register" class="btn_primary">Register</button>
           <button class="btn_common">Back</button>
         </div>
       </div>
