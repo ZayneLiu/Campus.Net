@@ -3,7 +3,7 @@
 # API Server
   `./APIServer`
   数据库 API 服务器 采用`ASP.NET Core` Web API
-  并采用 `Swagger` 作为API的文档页面 (项目在VS运行起来后) (https://localhost:5001/swagger/)[https://localhost:5001/swagger/]
+  并采用 `Swagger` 作为API的文档页面 (项目在VS运行起来后) [https://localhost:5001/swagger/](https://localhost:5001/swagger/)
   - 依赖项
     - `.NET Core SDK / Runtime >= 2.2`
       SDK安装包 `../Enviroment/dotnet-sdk-2.2.101-win-x64`
@@ -38,7 +38,7 @@
 # UI
   `./campus_net/`
   UI 采用`Vue`全家桶，`Vue.js` `Vuex` `vue-router` etc.
-  运行后的页面地址 (http://localhost:8080)[http://localhost:8080]
+  运行后的页面地址 [http://localhost:8080](http://localhost:8080)
   - 依赖项
   - 部署环境
     ```
