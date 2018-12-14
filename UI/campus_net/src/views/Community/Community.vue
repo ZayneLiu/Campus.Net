@@ -1,7 +1,7 @@
 <template>
   <div id="outer_container">
     <div class="nav">
-      <router-link to="/posts" v-html="'专栏'"/>
+      <router-link to="/articles" v-html="'文章'"/>
       <router-link to="/questions" v-html="'Questions'"/>
       <router-link to="/write" v-html="'发帖'"/>
       <router-link to="/ask" v-html="'提问'"/>
