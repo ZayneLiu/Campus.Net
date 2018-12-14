@@ -4,7 +4,7 @@
       <main id="main">
         <ul>
           <li v-bind:key="index" v-for="(post, index) in posts">
-            <ThePostItem :post="post"/>
+            <TheArticleItem :post="post"/>
           </li>
         </ul>
       </main>
