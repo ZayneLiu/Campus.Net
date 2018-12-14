@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Runtime.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 
 #endregion
 
@@ -19,13 +21,11 @@ namespace APIServer.Models
 		[BsonElement] public string SCID;
 		[BsonElement] public string Password;
 		[BsonElement] public string Email;
-		[BsonIgnore] public string Tel;
-		[BsonIgnore] public string RealName;
-		[BsonIgnore] public string Gender;
-		[BsonIgnore] public DateTime Birthday;
-		[BsonIgnore] public string Biography;
-		[BsonIgnore] public List<string> MyInvolvement;
-		[BsonIgnore] public List<string> MyStars;
-		[BsonIgnore] public List<string> MyWatchlist;
+		[BsonElement] public string Tel;
+		[BsonElement] public string RealName;
+		[BsonElement] public string Gender;
+		[BsonElement]
+		public DateTime Birthday;
+		[BsonElement] public string Biography;
 	}
 }
