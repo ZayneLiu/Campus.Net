@@ -51,6 +51,7 @@ const innerRouter = new VueRouter({
     },
     {
       path: '/write',
+      // component: () => import('@/components/WriteSimple.vue'),
       component: () => import('@/components/Write.vue'),
       props: {
         post: true,
@@ -58,6 +59,7 @@ const innerRouter = new VueRouter({
     },
     {
       path: '/ask',
+      // component: () => import('@/components/WriteSimple.vue'),
       component: () => import('@/components/Write.vue'),
       props: {
         question: true,
