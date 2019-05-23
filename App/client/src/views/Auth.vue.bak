@@ -1,0 +1,52 @@
+<template>
+  <div class="auth">
+    <Login v-if="isLogin"></Login>
+    <Register v-else></Register>
+  </div>
+</template>
+
+<style lang='scss' scoped>
+.auth {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: medium;
+    span {
+      cursor: pointer;
+      font-weight: 600;
+      color: #409eff;
+      &:hover {
+        text-decoration: underline;
+        filter: brightness(70%);
+      }
+    }
+  }
+}
+</style>
+
+<script lang='ts'>
+import { Component, Vue } from 'vue-property-decorator';
+import Login from '@/components/Login.vue';
+import Register from '@/components/Register.vue';
+
+@Component({
+  components: {
+    Login,
+    Register,
+  },
+})
+export default class Auth extends Vue {
+  private isLogin: boolean = true;
+
+  private toggleTo(s: string) {
+    if (s.toLowerCase() === 'login') {
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
+
+  }
+}
+</script>

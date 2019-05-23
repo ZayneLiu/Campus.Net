@@ -1,0 +1,35 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@types/marked": "^0.6.5",
+    "axios": "^0.18.0",
+    "iview": "^3.4.1",
+    "marked": "^0.6.2",
+    "sweetalert": "^2.1.2",
+    "ts-md5": "^1.2.4",
+    "vue": "^2.6.10",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^7.0.0",
+    "vue-router": "^3.0.6",
+    "vuex": "^3.0.1",
+    "vuex-module-decorators": "^0.9.8",
+    "vuex-persist": "^2.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-typescript": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "fibers": "^3.1.1",
+    "sass": "^1.20.1",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.4.5",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
