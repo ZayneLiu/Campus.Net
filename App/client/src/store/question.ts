@@ -13,7 +13,7 @@ export default class QuestionModule extends VuexModule {
 
 
     @Action
-    public async askQuestion(info: { content: string, title: string, email: string }) {
+    public async askQuestion(info: any) {
         return await Axios({
             method: 'POST',
             url: '/questions/ask',
@@ -52,6 +52,18 @@ export default class QuestionModule extends VuexModule {
         return await Axios({
             method: 'POST',
             url: '/questions/view',
+            data: {
+                q_id: info.qid,
+                u_id: info.uid,
+            },
+        });
+    }
+    @Action
+    public async followQuestion(info: { qid: string, uid: string }) {
+
+        return await Axios({
+            method: 'POST',
+            url: '/questions/follow',
             data: {
                 q_id: info.qid,
                 u_id: info.uid,
