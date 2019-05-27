@@ -51,6 +51,7 @@ def _update_user_by_email(email: str, new_u):
 # region Auth
 
 def login(email: str, password: str):
+    user = _get_user_by_email(email)
     if user is None:
         return {
             'code': 404,
@@ -84,6 +85,7 @@ def register(username: str, email: str, password: str):
 
 
 def get_user_by_email(email: str):
+    user = _get_user_by_email(email=email)
     return {
         'code': 200,
         'user': json._json_convert(user),
@@ -93,6 +95,7 @@ def get_user_by_email(email: str):
     }
 
 
+def ask_question(title: str, content: str, email: str, tags: list):
     result = questions.insert_one(
         {
             'title': title,
@@ -123,6 +126,8 @@ def get_questions():
 
 
 def get_question(_id: str):
+    result = _get_question_by_id(_id)
+    # print(result)
     return {
         'code': 200,
         'question': json._json_convert(result)
@@ -131,6 +136,8 @@ def get_question(_id: str):
 
 def view_counter(q_id: str, u_id: str):
     # 问题浏览次数
+    question = _get_question_by_id(q_id)
+    user = _get_user_by_id(u_id)
 
     history_list: list = user['question_history']
 
