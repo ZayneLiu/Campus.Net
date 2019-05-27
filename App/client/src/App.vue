@@ -257,8 +257,7 @@ export default class App extends Vue {
   }
 
   public ask() {
-    // @ts-ignore
-    this.$eventHub.$emit('ask-question');
+    this.$EventBus.$emit('ask-question');
   }
 
   public get isLoggedIn(): boolean {
