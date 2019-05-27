@@ -1,7 +1,9 @@
 from pymongo import MongoClient, database
+from pymongo.collection import Collection
 import bson.json_util as json
 from bson import ObjectId
 import datetime
+from werkzeug.datastructures import FileStorage
 
 client = MongoClient('mongodb://192.168.99.100:32770')
 
@@ -9,14 +11,39 @@ client = MongoClient('mongodb://192.168.99.100:32770')
 campus_net = client.get_database('campus_net')
 
 # region Collections
+users: Collection = campus_net.get_collection('users')
+questions: Collection = campus_net.get_collection('questions')
 
 
 # endregion
 
 
 # Getters
+def _get_user_by_email(email: str):
     user = users.find_one({'email': email})
     return user
+
+
+def _get_user_by_id(u_id: str):
+    user = users.find_one({'_id': ObjectId(u_id)})
+    return user
+
+
+def _get_question_by_id(q_id: str):
+    question = questions.find_one({'_id': ObjectId(q_id)})
+    return question
+
+
+def _update_question_by_id(q_id: str, new_q):
+    return questions.update_one({'_id': q_id}, new_q).acknowledged
+
+
+def _update_user_by_id(u_id: str, new_u):
+    return users.update_one({'_id': u_id}, new_u).acknowledged
+
+
+def _update_user_by_email(email: str, new_u):
+    return users.update_one({'email': email}, new_u).acknowledged
 
 
 # Actions
