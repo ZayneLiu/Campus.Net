@@ -4,7 +4,6 @@
 
     <h1 class="title">{{question.title}}</h1>
     <div class="tags-views">
-      <Tags/>
       <span class="view-counter">{{question.views}} views</span>
     </div>
     <!-- views -->
@@ -55,26 +54,21 @@
       margin-top: 10px;
       height: fit-content;
       position: sticky;
-      //   position: fixed;
       top: 20px;
       display: flex;
       flex-flow: column nowrap;
-      //   justify-content: space-evenly;
       align-items: center;
       width: 50px;
       border: 1px solid #c5c5c5;
       border-radius: 4px;
-      //   float: left;
       .tips {
         display: flex;
         padding: 0;
         margin: 0;
         width: 100%;
-        // margin: auto;
         .up-vote {
           padding-top: 5px;
           span {
-            // height: 10px;
             line-height: 18px;
             padding: 5px 0 0 0;
           }
@@ -84,7 +78,6 @@
         }
         .up-vote,
         .down-vote {
-          // padding: 5px;
           cursor: pointer;
           width: 100%;
           display: flex;
@@ -93,12 +86,9 @@
           background-color: transparent;
           border: none;
           &:hover {
-            background-color: grey;
             color: #ffffff;
-            transition-delay: 0;
             span {
               transition-delay: 0;
-              // transition: none;
             }
           }
         }
@@ -109,8 +99,6 @@
       margin-left: 10px;
       height: fit-content;
       .content {
-        //   border-left: 1px solid #d5d5d5;
-        //   border-radius: 4px;
       }
     }
   }
