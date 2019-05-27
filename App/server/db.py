@@ -170,8 +170,32 @@ def view_counter(q_id: str, u_id: str):
     }
 
 
+def set_avatar(email: str, avatar: str):
+    user = _get_user_by_email(email)
+    user['avatar'] = avatar
+    return _update_user_by_email(email=email, new_u=user)
+    # users.update_one({'email': email}, result_user)
 
 
+def follow_question(q_id: str, u_id: str):
+    # 用户信息中的关注的问题列表
+    user = _get_user_by_id(u_id)
+    if 'following_questions' not in user.keys():
+        user['following_questions']: list = [].append(q_id)
+    else:
+        list(user['following_questions']).append(q_id)
+
+    _update_user_by_id(u_id=u_id, new_u=user)
+
+    # 问题详情中已关注该问题的用户数
+    question = _get_question_by_id(q_id)
+    if 'followed' not in question.keys():
+        question['followed'] = 1
+    else:
+        temp = question['followed']
+        question['followed'] = int(temp) + 1
+
+    _update_question_by_id(q_id=q_id, new_q=question)
 
     return {
         'code': 200,
