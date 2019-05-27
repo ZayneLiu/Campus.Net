@@ -12,7 +12,7 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
 
-Vue.prototype.$eventHub = new Vue();
+Vue.prototype.$EventBus = new Vue();
 
 Vue.use(iView);
 
