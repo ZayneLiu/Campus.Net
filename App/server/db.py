@@ -101,6 +101,7 @@ def ask_question(title: str, content: str, email: str, tags: list):
             'title': title,
             'content': content,
             'email': email,
+            'tags': tags,
             'time': datetime.datetime.now().__str__()[0:19]
         }).acknowledged
     # print(result)
@@ -150,6 +151,24 @@ def view_counter(q_id: str, u_id: str):
 
     # 用户浏览记录 字段初始化
     if 'question_history' not in user.keys():
+        user['question_history'] = [].append(q_id)
+    else:
+        # 问题历史记录 如果没有重复项 则插入在列表首位
+        # 若已经浏览过改问题 则将其在列表中的位置移动至历史记录首位
+        if q_id in history_list:
+            history_list.remove(q_id)
+
+        history_list.insert(0, q_id)
+
+    _update_question_by_id(question['_id'], question)
+    # questions.update_one({'_id': question['_id']}, question)
+    _update_user_by_id(user['_id'], user)
+    # users.update_one({'_id': user['_id']}, user)
+
+    return {
+        'code': 200,
+    }
+
 
 
 
