@@ -47,9 +47,28 @@ configure_uploads(app, avatars)
 
 @app.route('/upload/avatar', methods=['POST'])
 def upload():
+    email = request.form['email']
+    result_user = db._get_user_by_email(email=email)
+
+    avatar = request.files['avatar']
+    ext = avatar.filename.split('.')[-1].lower()
+    import time
+    avatar.filename = result_user['_id'].__str__() + '_' + time.time_ns().__str__() + '.' + ext
+
     if 'avatar' in request.files:
-        filename = avatars.save(request.files['avatar'])
-        return json.dumps({'code': 200, 'url': avatars.url(filename)})
+        import os
+        for root, d, files in os.walk(avatars.path('')):
+            for file in files:
+                if os.path.splitext(file)[0].split('_')[0] == result_user['_id'].__str__():
+                    # 删除重复头像文件
+                    os.remove(root + file)
+
+        # 将上传文件存入服务器
+        filename = avatars.save(avatar)
+        # 调用 db 中的业务逻辑将新头像 URL 更新到目标用户数据库资料中
+        db.set_avatar(email=email, avatar=avatars.url(filename))
+
+        return json.dumps({'code': 200})
     return json.dumps({'code': 204, 'message': 'File not uploaded.'})
 
 
