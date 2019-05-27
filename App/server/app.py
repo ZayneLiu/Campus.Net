@@ -82,6 +82,14 @@ def view_counter():
     return json.dumps(result)
 
 
+@app.route('/questions/follow', methods=['POST'])
+def view_counter():
+    q_id = Request.get_json(request)['q_id']
+    u_id = Request.get_json(request)['u_id']
+    result = db.follow_question(q_id=q_id, u_id=u_id)
+    return json.dumps(result)
+
+
 if __name__ == '__main__':
     app.debug = True
     app.env = 'development'
