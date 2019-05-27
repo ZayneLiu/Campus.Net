@@ -50,7 +50,8 @@ def upload():
     email = request.form['email']
     result_user = db._get_user_by_email(email=email)
 
-    avatar = request.files['avatar']
+    from werkzeug.datastructures import FileStorage
+    avatar: FileStorage = request.files['avatar']
     ext = avatar.filename.split('.')[-1].lower()
     import time
     avatar.filename = result_user['_id'].__str__() + '_' + time.time_ns().__str__() + '.' + ext
