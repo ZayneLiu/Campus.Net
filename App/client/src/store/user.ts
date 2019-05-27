@@ -70,4 +70,14 @@ export default class User extends VuexModule {
         });
     }
 
+    @Action
+    public async saveAvatar(form: FormData) {
+        await Axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            url: '/upload/avatar',
+            data: form,
+        });
+    }
+
 }
