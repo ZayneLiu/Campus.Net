@@ -143,6 +143,8 @@ def view_counter(q_id: str, u_id: str):
 
     if 'views' not in question.keys():
         # 问题浏览记录 字段初始化
+        question['views'] = 1
+    elif q_id not in history_list:
         views = question['views'] + 1
         question['views'] = views
 
