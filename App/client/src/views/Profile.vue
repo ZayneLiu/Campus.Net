@@ -3,7 +3,26 @@
     <div class="profile_heading">
       <main>
         <div id="avatar_social">
-          <div id="-avatar">avatar</div>
+          <div
+            :style=" newAvatar===''? { backgroundImage: 'url('+ image+')' }: { backgroundImage: 'url('+ newAvatar+')' } "
+            id="-avatar"
+            ref="avatar"
+          >
+            <div @click="changeAvatar()" class="layer">Change avatar</div>
+            <input
+              @change="preview"
+              accept="image/*"
+              name="avatar"
+              ref="myAvatar"
+              single
+              type="file"
+              v-show="false"
+            >
+          </div>
+          <div class="btn-group">
+            <button @click="saveAvatar" class="save-avatar" v-show="edited">Save</button>
+            <button @click="resetAvatar" class="reset-avatar" v-show="edited">Cancel</button>
+          </div>
           <!-- <div id="-social">
             <i aria-hidden="true" class="fa fa-weixin"></i>
             <i aria-hidden="true" class="fa fa-weibo"></i>
@@ -82,6 +101,63 @@ export default class User extends Vue {
   private get user(): any {
     return this.$store.state.user.user;
   }
+
+
+  public avatar: any = {};
+  public get image(): any {
+    return this.$store.state.user.user.avatar;
+  }
+  public newAvatar: any = '';
+
+  public edited: boolean = false;
+
+
+  public preview() {
+    // Reference to the DOM input element
+    const input: any = this.$refs.myAvatar;
+    // Ensure that you have a file before attempting to read it
+    if (input.files && input.files[0]) {
+      // create a new FileReader to read this image and convert to base64 format
+      const reader = new FileReader();
+      // Define a callback function to run, when FileReader finishes its job
+      reader.onload = (e) => {
+        // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+        // Read image as base64 and set to image
+        // @ts-ignore
+        this.newAvatar = e.target.result;
+      };
+      // Start the reader job - read file as a data url (base64 format)
+      reader.readAsDataURL(input.files[0]);
+      this.edited = true;
+    }
+  }
+
+
+  // hook input's on-click to div's on-click
+  public changeAvatar() {
+    // @ts-ignore
+    this.$refs.myAvatar.click();
+  }
+
+  public saveAvatar() {
+    const form: FormData = new FormData();
+    // @ts-ignore
+    form.append('avatar', this.$refs.myAvatar.files[0])
+    form.append('email', this.user.email);
+
+    this.$store.dispatch('saveAvatar', form)
+      .then(() => {
+        this.$store.dispatch('getUserInfo', this.$store.state.user.user.email).then(() => {
+          this.edited = false;
+        });
+      });
+  }
+  public resetAvatar() {
+    this.newAvatar = '';
+    this.edited = false;
+  }
+
+
   public beforeCreate() {
     this.$store.dispatch('getUserInfo', this.$store.state.user.user.email);
   }
@@ -117,16 +193,62 @@ export default class User extends Vue {
       width: 380px;
       #avatar_social {
         display: flex;
-        flex-flow: column nowrap;
+        flex-flow: column wrap;
         align-self: center;
         height: fit-content;
+        // justify-content: center;
+        align-items: center;
         #-avatar {
-          color: white;
           line-height: 130px;
           height: 130px;
           width: 130px;
           border-radius: 65px;
+          display: flex;
           background-color: grey;
+          background-size: cover;
+          background-position: center;
+          // border: 3px solid #e5e5ee;
+          .layer {
+            // border: 3px solid transparent;
+            border-radius: 65px;
+            font-weight: 500;
+            background-color: transparent;
+            color: transparent;
+            width: 130px;
+            height: 130px;
+          }
+          &:hover {
+            .layer {
+              background-color: rgba($color: #000000, $alpha: 0.2);
+              color: white;
+            }
+            // filter: brightness(0.9);
+            cursor: pointer;
+          }
+        }
+        .btn-group {
+          width: 100%;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          .save-avatar,
+          .reset-avatar {
+            padding: 1px 2px;
+            cursor: pointer;
+            width: 46%;
+            border-radius: 4px;
+            font-size: 15px;
+            // margin: 5px;
+            outline: none;
+          }
+          .save-avatar {
+            background-color: #3e76f6;
+            color: #ffffff;
+            &:hover {
+              // background-blend-mode: lighten;
+              background-color: #4980ff;
+            }
+          }
         }
         #-social {
           display: flex;
