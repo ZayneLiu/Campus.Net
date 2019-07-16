@@ -1,9 +1,6 @@
 <template>
   <div class="tags">
-    <a :href="tag.url" :html="tag.name" :key="index" class="tag" v-for="(tag,index) in tags"/>
-    <a class="tag" href="#">Database</a>
-    <a class="tag" href="#">Flask</a>
-    <a class="tag" href="#">Web</a>
+    <span :key="index" class="tag" v-for="(tag,index) in tags">{{tag}}</span>
   </div>
 </template>
 
@@ -47,7 +44,7 @@ import { Prop } from 'vue-property-decorator';
 export default class Tags extends Vue {
   @Prop({
     required: true,
-    default: [],
+    default: () => [],
   })
   public tags!: any[];
 }

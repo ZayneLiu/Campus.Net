@@ -79,5 +79,14 @@ export default class User extends VuexModule {
             data: form,
         });
     }
-
+    @Action
+    public async getHistory(email: string) {
+        await Axios({
+            method: 'POST',
+            url: '/user/question-history',
+            data: {
+                email,
+            },
+        });
+    }
 }

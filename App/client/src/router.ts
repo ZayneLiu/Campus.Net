@@ -33,6 +33,11 @@ export default new Router({
       component: () => import('@/views/Profile.vue'),
       children: [
         {
+          path: '/',
+          name: 'HomePage',
+          component: () => import('@/components/Profile/HomePage.vue')
+        },
+        {
           path: 'my-answers',
           name: 'MyAnswers',
           component: () => import('@/components/Profile/MyAnswers.vue'),
@@ -46,6 +51,11 @@ export default new Router({
           path: 'my-watch-list',
           name: 'MyWatchList',
           component: () => import('@/components/Profile/MyWatchList.vue'),
+        },
+        {
+          path: 'question-history',
+          name: 'QuestionHistory',
+          component: () => import('@/components/Profile/History.vue'),
         },
       ],
     },

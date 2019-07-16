@@ -65,26 +65,30 @@
         </p>
       </div>
     </div>
-    <div class="quick-access-panel">
-      <div class="social-status">
-        <div class="following">
-          <span>关注了</span>
-          <span>
+
+    <div class="profile-body-wrapper">
+      <div class="quick-access-panel">
+        <div class="social-status">
+          <div class="following">
+            <span>关注了</span>
+            <span>
+              <strong>xx 人</strong>
+            </span>
+          </div>
+          <hr>
+          <div class="followers">
+            <span>被关注</span>
             <strong>xx 人</strong>
-          </span>
+          </div>
         </div>
-        <hr>
-        <div class="followers">
-          <span>被关注</span>
-          <strong>xx 人</strong>
-        </div>
+        <router-link class="quick-access-item" to="/profile">我的主页</router-link>
+        <router-link class="quick-access-item" to="/profile/my-answers">我的回答</router-link>
+        <router-link class="quick-access-item" to="/profile/my-questions">我的提问</router-link>
+        <router-link class="quick-access-item" to="/profile/my-watch-list">我关注的</router-link>
+        <router-link class="quick-access-item" to="/profile/question-history">历史记录</router-link>
       </div>
-      <router-link class="quick-access-item" to="/profile">我的主页</router-link>
-      <router-link class="quick-access-item" to="/profile/my-answers">我的回答</router-link>
-      <router-link class="quick-access-item" to="/profile/my-questions">我的提问</router-link>
-      <router-link class="quick-access-item" to="/profile/my-watch-list">我关注的</router-link>
+      <router-view class="profile-body"></router-view>
     </div>
-    <router-view class="profile_body"></router-view>
   </div>
 </template>
 
@@ -142,7 +146,7 @@ export default class User extends Vue {
   public saveAvatar() {
     const form: FormData = new FormData();
     // @ts-ignore
-    form.append('avatar', this.$refs.myAvatar.files[0])
+    form.append('avatar', this.$refs.myAvatar.files[0]);
     form.append('email', this.user.email);
 
     this.$store.dispatch('saveAvatar', form)
@@ -172,7 +176,8 @@ export default class User extends Vue {
 <style lang="scss" scoped>
 #profile {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
+  flex-wrap: wrap;
   justify-content: flex-start;
   height: fit-content;
   .profile_heading {
@@ -346,52 +351,55 @@ export default class User extends Vue {
       }
     }
   }
-  .quick-access-panel {
+
+  .profile-body-wrapper {
+    margin-top: 4px;
+    width: 100%;
+    max-width: 1200px;
     display: flex;
-    flex-flow: column nowrap;
-    width: 150px;
-    .social-status {
+    flex-flow: row nowrap;
+    .quick-access-panel {
       display: flex;
-      flex-flow: row nowrap;
-      background-color: #f5f5f5;
-
-      padding: 5px 0;
-      align-items: center;
-      box-shadow: 0 4px 4px #d5d5d5;
-      margin: 4px 0 8px 0;
-      // shape-outside: padding-box;
-      .following,
-      .followers {
-        padding: 0 10px;
-        // text-align: start;
-        flex: 1;
+      flex-flow: column nowrap;
+      width: 150px;
+      .social-status {
         display: flex;
-        flex-flow: column nowrap;
+        flex-flow: row nowrap;
+        background-color: #f5f5f5;
+        padding: 5px 0;
+        align-items: center;
+        box-shadow: 0 4px 4px #d5d5d5;
+        margin: 0 0 8px 0;
+        .following,
+        .followers {
+          padding: 0 10px;
+          flex: 1;
+          display: flex;
+          flex-flow: column nowrap;
+        }
+        hr {
+          height: 30px;
+          border: none;
+          background-color: #d5d5d5;
+          width: 1px;
+        }
       }
-      hr {
-        height: 30px;
-        border: none;
-        background-color: #d5d5d5;
-        width: 1px;
+      .quick-access-item {
+        background-color: #f5f5f5;
+        width: 100%;
+        color: #2c3e50;
+        padding: 5px;
+        &.router-link-exact-active {
+          background-color: grey;
+          color: #ffffff;
+        }
       }
     }
-    .quick-access-item {
-      background-color: #f5f5f5;
-
-      width: 100%;
-      color: #2c3e50;
-      padding: 5px;
-      &.router-link-exact-active {
-        background-color: grey;
-        color: #ffffff;
-      }
+    .profile-body {
+      width: calc(100% - 150px);
+      // display: flex;
+      // flex-flow: column wrap;
     }
-
-    // background-color: red;
-  }
-  .profile_body {
-    display: flex;
-    flex-flow: column nowrap;
   }
 }
 </style>

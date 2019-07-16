@@ -4,6 +4,7 @@
 
     <h1 class="title">{{question.title}}</h1>
     <div class="tags-views">
+      <Tags :tags="question.tags"/>
       <span class="view-counter">{{question.views}} views</span>
     </div>
     <!-- views -->
@@ -25,8 +26,33 @@
         <div class="content" v-html="question.content"></div>
         <!-- TODO: Question Operations -->
         <!-- TODO: Author Info -->
+        <div class="actions-info">
+          <div class="actions">
+            <template
+              v-if=" question.followed === undefined || question.followed.indexOf(uid) < 0  "
+            >
+              <span @click="followQuestion" class="following">
+                关注
+                | {{question.followed ? question.followed.length:0}}
+              </span>
+            </template>
+            <template v-else>
+              <span class="following followed">已关注 | {{question.followed.length}}</span>
+            </template>
+            收藏 评论
+          </div>
+          <div class="info">
+            <div :style="{ backgroundImage: 'url('+ author.avatar+')'} " class="author-avatar"></div>
+            <div>
+              <span class="username">{{author.username}}</span>
+              <span class="time">{{time}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="comments"></div>
         <!-- TODO: Comments -->
       </div>
+      <div class="answers"></div>
     </div>
   </div>
 </template>
@@ -78,6 +104,7 @@
         }
         .up-vote,
         .down-vote {
+          outline: none;
           cursor: pointer;
           width: 100%;
           display: flex;
@@ -93,12 +120,71 @@
           }
         }
       }
+      &:hover {
+        background-color: #a0a0a0;
+        color: #ffffff;
+        transition-delay: 0;
+        span {
+          transition-delay: 0;
+        }
+      }
     }
     .question-body {
+      align-self: flex-start;
+      flex: 1;
       padding: 10px;
       margin-left: 10px;
       height: fit-content;
       .content {
+        text-align: start;
+        border-bottom: 1px solid #d5d5d5;
+      }
+      .actions-info {
+        margin-top: 5px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        .actions {
+          height: fit-content;
+          .following {
+            margin-right: 5px;
+            user-select: none;
+            cursor: pointer;
+            padding: 2px 5px;
+            background-color: lightgrey;
+            border-radius: 4px;
+            &:hover,
+            &.followed {
+              background-color: grey;
+              color: #ffffff;
+            }
+          }
+        }
+        .info {
+          margin-left: auto;
+          display: flex;
+          flex-flow: row;
+          align-items: center;
+          .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+            background-size: cover;
+            background-position: center;
+            margin-right: 5px;
+          }
+          div {
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: flex-start;
+            .username {
+              font-size: large;
+            }
+            .time {
+              font-size: 14px;
+            }
+          }
+        }
       }
     }
   }
@@ -108,6 +194,7 @@
 <script lang='ts'>
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import Tags from '@/components/QA/Tags.vue';
+import { Dictionary } from 'vuex';
 @Component({
   components: {
     Tags,
@@ -117,16 +204,75 @@ export default class QuestionDetail extends Vue {
   @Prop()
   public qid: any;
 
-  public question: any = {};
+  public question: any = {
+    // followed: [],
+  };
+  public author: any = {}
+
+  public get uid(): string {
+    return this.$store.state.user.user._id.$oid;
+  }
+
+  public get time(): string {
+    let timespan: number = new Date().getTime() - Date.parse(this.question.time)
+    Math.floor(timespan / (1000 * 60 * 60 * 24));
+
+    const days = Math.floor(timespan / (1000 * 60 * 60 * 24));
+    timespan -= days * (1000 * 60 * 60 * 24);
+    const hours = Math.floor(timespan / (1000 * 60 * 60));
+    timespan -= hours * (1000 * 60 * 60);
+    const mins = Math.floor(timespan / (1000 * 60));
+    timespan -= mins * (1000 * 60);
+    const seconds = Math.floor(timespan / (1000));
+    timespan -= seconds * (1000);
+
+    return this.getTimeString([days, hours, mins, seconds]);
+  }
+
+  public getTimeString(vs: number[]): string {
+    const mapper: Dictionary<string> = {
+      0: 'seconds',
+      1: 'min(s)',
+      2: 'hour(s)',
+      3: 'day(s)',
+    };
+    while (vs.length !== 0) {
+      const temp = vs.shift();
+      if (temp !== 0) {
+        return 'asked ' + temp + ' ' + mapper[vs.length] + ' ago';
+      }
+    }
+    return '';
+  }
+
+  public followQuestion() {
+
+    this.$store.dispatch('followQuestion', { qid: this.qid, uid: this.uid })
+      .then((res) => {
+        this.$store.dispatch('getQuestionById', this.qid)
+          .then((resQ) => {
+            // if (resQ.data.code === 200) {
+            this.question = resQ.data.question;
+            // }
+          });
+      });
+  }
+
 
   public mounted() {
-    const uid = this.$store.state.user.user._id.$oid;
-    this.$store.dispatch('viewQuestion', { qid: this.qid, uid });
-    this.$store.dispatch('getQuestionById', this.qid)
+
+    this.$store.dispatch('viewQuestion', { qid: this.qid, uid: this.uid })
       .then((res) => {
-        if (res.data.code === 200) {
-          this.question = res.data.question;
-        }
+        this.$store.dispatch('getQuestionById', this.qid)
+          .then((resQ) => {
+            this.question = resQ.data.question;
+          }).then(() => {
+            this.$store.dispatch('getUserProfile', this.question.email)
+              .then((resA) => {
+                this.author = resA.data.user;
+              });
+          },
+          );
       });
   }
 }
