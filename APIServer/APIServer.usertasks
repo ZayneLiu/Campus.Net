@@ -1,7 +1,0 @@
-<ListOfTaskListEntry>
-  <TaskListEntry file="" description="MongoBD 用 ObjectId 查询" completed="True" />
-  <TaskListEntry file="" description="仿照sample 完成 User CRUD" completed="True" />
-  <TaskListEntry file="" description="仿照sample 完成 Question CRUD" completed="True" />
-  <TaskListEntry file="" description="GetAllUsers" completed="True" />
-  <TaskListEntry file="" description="DateTine 数据库去处" />
-</ListOfTaskListEntry>
