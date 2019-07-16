@@ -35,15 +35,15 @@ def _get_question_by_id(q_id: str):
 
 
 def _update_question_by_id(q_id: str, new_q):
-    return questions.update_one({'_id': q_id}, new_q).acknowledged
+    return questions.update_one({'_id': ObjectId(q_id)}, {'$set': {**new_q}}).acknowledged
 
 
 def _update_user_by_id(u_id: str, new_u):
-    return users.update_one({'_id': u_id}, new_u).acknowledged
+    return users.update_one({'_id': ObjectId(u_id)}, {'$set': {**new_u}}).acknowledged
 
 
 def _update_user_by_email(email: str, new_u):
-    return users.update_one({'email': email}, new_u).acknowledged
+    return users.update_one({'email': email}, {'$set': {**new_u}}).acknowledged
 
 
 # Actions
@@ -75,7 +75,7 @@ def register(username: str, email: str, password: str):
         result = users.insert_one({'username': username,
                                    'email': email,
                                    'password': password, }).acknowledged
-        print(result)
+        # print(result)
         return users.find_one(email)
     else:
         return {'code': 409, 'message': 'Account already exists.'}
@@ -118,7 +118,7 @@ def get_questions():
     question_list = []
     for question in questions.find().sort('time'):
         question_list.append(question)
-        print(question)
+        # print(question)
     return {
         'code': 200,
         'questionList': json._json_convert(question_list)
@@ -149,19 +149,20 @@ def view_counter(q_id: str, u_id: str):
         views = question['views'] + 1
         question['views'] = views
 
+    _update_question_by_id(question['_id'], question)
+    # questions.update_one({'_id': question['_id']}, question)
+
     # 用户浏览记录 字段初始化
     if 'question_history' not in user.keys():
         user['question_history'] = [].append(q_id)
+    elif q_id in history_list:
+        # 已经浏览过改问题 则将其在列表中的位置移动至历史记录首位
+        history_list.remove(q_id)
+        history_list.insert(0, q_id)
     else:
-        # 问题历史记录 如果没有重复项 则插入在列表首位
-        # 若已经浏览过改问题 则将其在列表中的位置移动至历史记录首位
-        if q_id in history_list:
-            history_list.remove(q_id)
-
+        # 尚未浏览过此问题 则插入在列表首位
         history_list.insert(0, q_id)
 
-    _update_question_by_id(question['_id'], question)
-    # questions.update_one({'_id': question['_id']}, question)
     _update_user_by_id(user['_id'], user)
     # users.update_one({'_id': user['_id']}, user)
 
@@ -181,22 +182,34 @@ def follow_question(q_id: str, u_id: str):
     # 用户信息中的关注的问题列表
     user = _get_user_by_id(u_id)
     if 'following_questions' not in user.keys():
-        user['following_questions']: list = [].append(q_id)
+        user['following_questions'] = [q_id]
+        # user['following_questions'].append(q_id)
     else:
-        list(user['following_questions']).append(q_id)
+        following_list = user['following_questions']
+        user['following_questions'] = following_list + [q_id]
 
     _update_user_by_id(u_id=u_id, new_u=user)
 
     # 问题详情中已关注该问题的用户数
     question = _get_question_by_id(q_id)
     if 'followed' not in question.keys():
-        question['followed'] = 1
+        question['followed'] = [u_id]
     else:
         temp = question['followed']
-        question['followed'] = int(temp) + 1
+        question['followed'] = temp + [u_id]
 
     _update_question_by_id(q_id=q_id, new_q=question)
 
     return {
         'code': 200,
     }
+
+
+def get_question_history(email: str):
+    user = _get_user_by_email(email=email)
+    history_list: list = user['question_history']
+    result_question_list: list = []
+    for question_id in history_list:
+        result_question_list.append(_get_question_by_id(question_id))
+
+    return json._json_convert(result_question_list)

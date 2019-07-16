@@ -28,7 +28,7 @@ def register():
 def login():
     data = request.json
     result = db.login(data['email'], data['password'])
-    print(result)
+    # print(result)
     return json.dumps(result)
 
 
@@ -36,8 +36,15 @@ def login():
 def get_user_by_email():
     email = request.json['email']
     result = db.get_user_by_email(email=email)
-    print(result)
+    # print(result)
     return json.dumps(result)
+
+
+@app.route('/user/question-history', methods=['POST'])
+def get_question_history():
+    email = request.json['email']
+    history = db.get_question_history(email=email)
+    return json.dumps(history)
 
 
 avatars = UploadSet('avatars', IMAGES)
@@ -103,7 +110,7 @@ def view_counter():
 
 
 @app.route('/questions/follow', methods=['POST'])
-def view_counter():
+def follow_question():
     q_id = Request.get_json(request)['q_id']
     u_id = Request.get_json(request)['u_id']
     result = db.follow_question(q_id=q_id, u_id=u_id)
