@@ -8,14 +8,11 @@
         </span>
       </router-link>
       <div class="navbar">
-        <!-- <transition-group name="fade"> -->
-        <!-- <template v-if="this.isLoggedIn && this.$route.path !== '/qa/ask'"></template> -->
         <div v-show="this.isLoggedIn && this.$route.path !== '/qa/ask'">
-          <!-- <transition-group name="fade"> -->
           <router-link :key="1" :replace="true" to="/">Home</router-link>
           <router-link :key="2" :replace="true" to="/qa">Q&A</router-link>
           <router-link :key="3" :replace="true" to="/profile">Profile</router-link>
-          <!-- </transition-group> -->
+          <router-link :key="4" :replace="true" to="/project">Project</router-link>
         </div>
         <div v-show="this.$route.path === '/qa/ask'">
           <span class="banner-text">Ask Your Question</span>
@@ -25,13 +22,8 @@
       </div>
 
       <div class="search-bar" v-if="this.isLoggedIn && this.$route.path !== '/qa/ask'">
-        <Icon size="25" type="ios-search"/>
-        <input
-          @keypress.enter="search()"
-          placeholder="Search..."
-          type="text"
-          v-model="searchContent"
-        >
+        <Icon size="25" type="ios-search" />
+        <input @keypress.enter="search()" placeholder="Search..." type="text" v-model="searchContent" />
       </div>
 
       <div class="create">
@@ -41,7 +33,7 @@
       <div class="notice" v-if="this.$route.path !== '/qa/ask'">
         <Dropdown trigger="hover">
           <div>
-            <Icon class="icon" size="40" type="ios-notifications-outline"/>
+            <Icon class="icon" size="40" type="ios-notifications-outline" />
           </div>
 
           <DropdownMenu slot="list">
@@ -55,7 +47,7 @@
         <div class="avatar"></div>
       </div>
     </div>
-    <router-view class="router-view"/>
+    <router-view class="router-view" />
   </div>
 </template>
 
@@ -249,7 +241,6 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class App extends Vue {
-
   public searchContent: string = '';
 
   public search() {
@@ -266,7 +257,9 @@ export default class App extends Vue {
 
   public beforeMount() {
     if (!this.$store.state.user.isLoggedIn) {
-      if (!(this.$route.path === '/login' || this.$route.path === '/register')) {
+      if (
+        !(this.$route.path === '/login' || this.$route.path === '/register')
+      ) {
         this.$router.replace('/login');
       }
     } else {

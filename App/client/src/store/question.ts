@@ -47,7 +47,7 @@ export default class QuestionModule extends VuexModule {
 
     @Action
     public async viewQuestion(info: { qid: string, uid: string }) {
-        console.log(info);
+        // console.log(info);
 
         return await Axios({
             method: 'POST',

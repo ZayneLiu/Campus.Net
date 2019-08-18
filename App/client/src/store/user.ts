@@ -59,7 +59,7 @@ export default class User extends VuexModule {
 
     @Action
     public async getUserProfile(email: string) {
-        console.log(email);
+        // console.log(email);
 
         return await Axios({
             method: 'POST',

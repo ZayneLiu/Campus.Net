@@ -15,17 +15,19 @@ export default new Router({
       path: '/qa',
       name: 'Questions&Answers',
       component: () => import('@/views/QA.vue'),
-    },
-    {
-      path: '/qa/ask',
-      name: 'AskQuestion',
-      component: () => import('@/components/QA/AskQuestion.vue'),
-    },
-    {
-      path: '/qa/:qid',
-      name: 'QuestionDetail',
-      component: () => import('@/views/QuestionDetail.vue'),
-      props: true,
+      children: [
+        {
+          path: '/qa/ask',
+          name: 'AskQuestion',
+          component: () => import('@/components/QA/AskQuestion.vue'),
+        },
+        {
+          path: '/qa/:qid',
+          name: 'QuestionDetail',
+          component: () => import('@/views/QuestionDetail.vue'),
+          props: true,
+        },
+      ],
     },
     {
       path: '/profile',
@@ -35,7 +37,7 @@ export default new Router({
         {
           path: '/',
           name: 'HomePage',
-          component: () => import('@/components/Profile/HomePage.vue')
+          component: () => import('@/components/Profile/HomePage.vue'),
         },
         {
           path: 'my-answers',

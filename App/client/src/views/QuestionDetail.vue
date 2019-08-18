@@ -4,7 +4,7 @@
 
     <h1 class="title">{{question.title}}</h1>
     <div class="tags-views">
-      <Tags :tags="question.tags"/>
+      <Tags :tags="question.tags" />
       <span class="view-counter">{{question.views}} views</span>
     </div>
     <!-- views -->
@@ -12,13 +12,13 @@
       <div class="voter">
         <Tooltip class="tips" content="I have the same question!" placement="left">
           <button class="up-vote">
-            <Icon type="ios-arrow-up"/>
+            <Icon type="ios-arrow-up" />
             <span>0</span>
           </button>
         </Tooltip>
         <Tooltip class="tips" content="Invaluable question." placement="left">
           <button class="down-vote">
-            <Icon type="ios-arrow-down"/>
+            <Icon type="ios-arrow-down" />
           </button>
         </Tooltip>
       </div>
@@ -28,9 +28,7 @@
         <!-- TODO: Author Info -->
         <div class="actions-info">
           <div class="actions">
-            <template
-              v-if=" question.followed === undefined || question.followed.indexOf(uid) < 0  "
-            >
+            <template v-if=" question.followed === undefined || question.followed.indexOf(uid) < 0  ">
               <span @click="followQuestion" class="following">
                 关注
                 | {{question.followed ? question.followed.length:0}}
@@ -207,14 +205,15 @@ export default class QuestionDetail extends Vue {
   public question: any = {
     // followed: [],
   };
-  public author: any = {}
+  public author: any = {};
 
   public get uid(): string {
     return this.$store.state.user.user._id.$oid;
   }
 
   public get time(): string {
-    let timespan: number = new Date().getTime() - Date.parse(this.question.time)
+    let timespan: number =
+      new Date().getTime() - Date.parse(this.question.time);
     Math.floor(timespan / (1000 * 60 * 60 * 24));
 
     const days = Math.floor(timespan / (1000 * 60 * 60 * 24));
@@ -223,8 +222,8 @@ export default class QuestionDetail extends Vue {
     timespan -= hours * (1000 * 60 * 60);
     const mins = Math.floor(timespan / (1000 * 60));
     timespan -= mins * (1000 * 60);
-    const seconds = Math.floor(timespan / (1000));
-    timespan -= seconds * (1000);
+    const seconds = Math.floor(timespan / 1000);
+    timespan -= seconds * 1000;
 
     return this.getTimeString([days, hours, mins, seconds]);
   }
@@ -246,33 +245,33 @@ export default class QuestionDetail extends Vue {
   }
 
   public followQuestion() {
-
-    this.$store.dispatch('followQuestion', { qid: this.qid, uid: this.uid })
+    this.$store
+      .dispatch('followQuestion', { qid: this.qid, uid: this.uid })
       .then((res) => {
-        this.$store.dispatch('getQuestionById', this.qid)
-          .then((resQ) => {
-            // if (resQ.data.code === 200) {
-            this.question = resQ.data.question;
-            // }
-          });
+        this.$store.dispatch('getQuestionById', this.qid).then((resQ) => {
+          // if (resQ.data.code === 200) {
+          this.question = resQ.data.question;
+          // }
+        });
       });
   }
 
-
   public mounted() {
-
-    this.$store.dispatch('viewQuestion', { qid: this.qid, uid: this.uid })
+    this.$store
+      .dispatch('viewQuestion', { qid: this.qid, uid: this.uid })
       .then((res) => {
-        this.$store.dispatch('getQuestionById', this.qid)
+        this.$store
+          .dispatch('getQuestionById', this.qid)
           .then((resQ) => {
             this.question = resQ.data.question;
-          }).then(() => {
-            this.$store.dispatch('getUserProfile', this.question.email)
+          })
+          .then(() => {
+            this.$store
+              .dispatch('getUserProfile', this.question.email)
               .then((resA) => {
                 this.author = resA.data.user;
               });
-          },
-          );
+          });
       });
   }
 }
